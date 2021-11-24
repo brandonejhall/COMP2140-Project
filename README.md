@@ -9,4 +9,4 @@ established to ensure the requirements engineering process can be properly done;
 the software studio sessions. The implementation of the specified system must include at least 80% of the
 functionality specified in the requirements. Groups may use any suitable programming language; however,
 solutions must demonstrate the principles of object-oriented/procedural design, and the architecture/design
-specified must be actualized in the implementation.
+specified must be actualized in the implementation.(:)
