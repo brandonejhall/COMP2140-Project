@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<h1>{{title}}</h1>
+    <form action="" method="post" novalidate>
+
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=50) }}
+        </p>
+        <p>
+            {{form.date_time.label}}
+            {{form.date_time()}}
+        </p>
+       
+        <p>{{ form.submit() }}</p>
+        
+    </form>
+{% endblock %}
