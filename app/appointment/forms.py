@@ -8,6 +8,6 @@ class BookingForm(FlaskForm):
     name = StringField('name', [DataRequired()])
     email = EmailField('email', [DataRequired()])
     appointment =  StringField('booking', [DataRequired()])
-    date_time = DateTimeLocalField("Date (DD-MM-YYYY)", [DataRequired()])
+    date_time = DateTimeLocalField("Date (DD-MM-YYYY)", [DataRequired()], format='%Y-%m-%dT%H:%M')
     submit = SubmitField('submit')
     

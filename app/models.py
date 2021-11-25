@@ -21,4 +21,13 @@ class Appointments(db.Model):
     name = db.Column(db.String(45),index = True)
     email = db.Column(db.String(45),index = True)
     app_type = db.Column(db.String(45),index = True)
-    date_time = db.Column(db.DateTime(),index = True)
+    date_time = db.Column(db.String(),index = True)
+
+def __repr__(self):
+    return '<Appointments {}>'.format(self.name)
+
+def init_db():
+    db.create_all()
+
+if __name__ == '__main__':
+    init_db()
