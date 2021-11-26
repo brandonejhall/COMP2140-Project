@@ -1,16 +1,21 @@
-from flask import Blueprint,render_template,session,redirect
+from flask import Blueprint,render_template,session,redirect,flash
 from flask.helpers import url_for
+import string
+import random
 
 
 
 appointment = Blueprint('appoint',__name__,template_folder='templates')
 
 from flask import request
-from app.appointment.forms import BookingForm
+from app.appointment.forms import BookingForm, RescheduleForm
 from app import db
 from app.models import Appointments
 
-@appointment.route('/', methods = ['GET','POST'])
+def id_generator(size=12, c=string.ascii_uppercase + string.digits):
+        return ''.join(random.choice(c) for _ in range(size))
+
+@appointment.route('/book', methods = ['GET','POST'])
 def index():
     form = BookingForm()
     if request.method == 'POST':
@@ -18,14 +23,27 @@ def index():
         dt = str(form.date_time.data)
         app = form.appointment.data
         email = form.email.data
-        b = Appointments(name = name,email = email,app_type = app,date_time = dt)
-        db.session.add(b)
-        db.session.commit()
+        test_ref_num = id_generator()
+        while (Appointments.query.filter_by(ref_num=test_ref_num).first() is not None):
+            test_ref_num = id_generator()    
+        else:
+            booking = Appointments(ref_num = test_ref_num,name = name,email = email,app_type = app,date_time = dt)
+            db.session.add(booking)
+            db.session.commit()
     return render_template('booking.html',title ='Book Appointment',form = form)
 
-@appointment.route('/page/<data>',methods=['GET'])
-def page(data):
-    x = str(type(data))
-    return x
-    
+@appointment.route('/reschedule',methods=['GET','POST'])
+def reschedule():
+    form = RescheduleForm()
+    if request.method == 'POST':
+        email = form.email.data
+        ref_num = form.ref_number.data
+        dt = str(form.new_date_time.data)
+        app = Appointments.query.filter_by(ref_num=ref_num).first()
+        if (app is None):
+            pass
+        if app.email == email:
+            app.date_time = dt
+            db.session.commit()
+    return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
     

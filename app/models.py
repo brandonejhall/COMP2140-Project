@@ -18,6 +18,7 @@ class AdminUser(db.Model):
 
 class Appointments(db.Model):
     ref_id = db.Column(db.Integer,primary_key = True)
+    ref_num = db.Column(db.String(12),index=True)
     name = db.Column(db.String(45),index = True)
     email = db.Column(db.String(45),index = True)
     app_type = db.Column(db.String(45),index = True)

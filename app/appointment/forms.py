@@ -10,4 +10,11 @@ class BookingForm(FlaskForm):
     appointment =  StringField('booking', [DataRequired()])
     date_time = DateTimeLocalField("Date (DD-MM-YYYY)", [DataRequired()], format='%Y-%m-%dT%H:%M')
     submit = SubmitField('submit')
+
+class RescheduleForm(FlaskForm):
+    email = EmailField('email', [DataRequired()])
+    ref_number = StringField('reference number', [DataRequired()])
+    new_date_time = DateTimeLocalField("Date (DD-MM-YYYY)", [DataRequired()], format='%Y-%m-%dT%H:%M')
+    submit = SubmitField('submit')
+
     
