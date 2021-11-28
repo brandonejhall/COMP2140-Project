@@ -108,6 +108,9 @@ label{
     padding-bottom: 15px;
     width: 100%;
 }
+#form-control{
+    height: 5%;
+}
 
 input{
     width: 200px;

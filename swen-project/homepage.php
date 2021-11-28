@@ -39,9 +39,19 @@
                         <div class="form-input">
                             <label for="reason">Reason: <em>(Required)</label>
                             <select class="form-control" name="reason" id="reason" require>
-                                <option value="a">a</option>
-                                <option value="b">b</option>
-                                <option value="c">c</option>
+                                <option value="Individual Career Counselling">Individual Career Counselling</option>
+                                <option value="Career Protfolio Guidance">Career Protfolio Guidance</option>
+                                <option value="Resume Advising/Reviews">Resume Advising/Reviews</option>
+                                <option value="Cover Letter Advising Reviews">Cover Letter Advising Reviews</option>
+                                <option value="Job Interview Techniques Coaching">Job Interview Techniques Coaching</option>
+                                <option value="Job Search Assistance">Job Search Assistance</option>
+                                <option value="Job Referrals-Summer/Part-Time/Full-Time">Job Referrals-Summer/Part-Time/Full-Time</option>
+                                <option value="Internship Coordination">Internship Coordination</option>
+                                <option value="Employment Compensation Package Advising">Employment Compensation Package Advising</option>
+                                <option value="Career Explorations Opportunities">Career Explorations Opportunities</option>
+                                <option value="Career Development/World of Work Seminars">Career Development/World of Work Seminars</option>
+                                <option value="Overseas Work & Travel Programme">Overseas Work & Travel Programme</option>
+
                             </select>
                         </div>      
                     </fieldset> 
