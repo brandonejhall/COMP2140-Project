@@ -1,0 +1,3 @@
+Dear {{booking.name}},
+
+Your Appointment for {{booking.app_type}} is set for {{booking.date_time}}
