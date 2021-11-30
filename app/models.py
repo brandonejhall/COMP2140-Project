@@ -15,8 +15,6 @@ class AdminUser(db.Model):
         return check_password_hash(self.password_hash,password)
 
 
-
-
 class Appointments(db.Model):
     ref_id = db.Column(db.Integer,primary_key = True)
     ref_num = db.Column(db.String(12),index=True)

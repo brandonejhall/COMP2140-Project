@@ -3,7 +3,13 @@
 {% block content%}
 <h1>{{title}}</h1>
     <form action="" method="post" novalidate>
-
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <p>
             {{ form.name.label }}<br>
             {{ form.name(size=32) }}

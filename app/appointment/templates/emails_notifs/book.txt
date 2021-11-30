@@ -1,3 +1,5 @@
 Dear {{booking.name}},
 
-Your Appointment for {{booking.app_type}} is set for {{booking.date_time}}
+APPOINTMENT REASON: {{booking.app_type}}
+DATE OF APPOINTMENT: {{booking.date_time}}
+REFERENCE NUMBER: {{booking.ref_num}}
