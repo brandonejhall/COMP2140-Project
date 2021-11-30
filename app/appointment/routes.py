@@ -19,31 +19,31 @@ def id_generator(size=12, c=string.ascii_uppercase + string.digits):
 
 def date_check(dt):
     dt_check = dt.split()[0].split('-')
-    date_time = datetime.datetime(int(dt_check[0]),int(dt_check[1]),int(dt_check[2]))
+    date_time = datetime.date(int(dt_check[0]),int(dt_check[1]),int(dt_check[2]))
     check = AvailableTimes.query.first()
     range = check.no_appointment.split()
     # checks if date ranges were set and capture the ranges in which appointments cannot be set
     if range[0] != 'None':
-        start = datetime.datetime(int(range[0].split('-')[0]),int(range[0].split('-')[1]),int(range[0].split('-')[1]))
+        start = datetime.date(int(range[0].split('-')[0]),int(range[0].split('-')[1]),int(range[0].split('-')[2]))
         start_exists = True
     else:
         start_exists = False
     if range[1] != 'None':
-        end = datetime.datetime(int(range[1].split('-')[0]),int(range[1].split('-')[1]),int(range[1].split('-')[1]))
+        end = datetime.date(int(range[1].split('-')[0]),int(range[1].split('-')[1]),int(range[1].split('-')[2]))
         end_exists = True
     else:
         end_exists = False
         
     #checks if any specific date exists to take into consideration for booking
     if (check.specific_dates != 'None'):
-        s_date = datetime.datetime(int(check.specific_dates.split('-')[0]),int(check.specific_dates.split('-')[1]),int(check.specific_dates.split('-')[2]))
+        s_date = datetime.date(int(check.specific_dates.split('-')[0]),int(check.specific_dates.split('-')[1]),int(check.specific_dates.split('-')[2]))
         s_date_real = True
     else:
         s_date_real = False   
 
     if start_exists and end_exists:
         if (start<=date_time<=end):
-            flash("Please enter a date which is not in the range "+ range[0].split('-') + " - " + range[1].split('-'),"error")
+            flash("Please enter a date which is not in the range "+ range[0] + " - " + range[1],"error")
             range_ok = False
         else:
             range_ok = True
@@ -82,6 +82,7 @@ def index():
                 txt = render_template('emails_notifs/book.txt',booking = booking)
                 ht = render_template('emails_notifs/book.html',booking = booking)
                 send_mail.send_email('Career Service Appointment',config.Config.MAIL_USERNAME,[email],txt,ht)
+                flash('Confirmation email sent','info')
             
                 db.session.add(booking)
                 db.session.commit()
