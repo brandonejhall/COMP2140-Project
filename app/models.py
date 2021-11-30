@@ -1,3 +1,4 @@
+from wtforms.fields.datetime import DateField
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -23,6 +24,14 @@ class Appointments(db.Model):
     email = db.Column(db.String(45),index = True)
     app_type = db.Column(db.String(45),index = True)
     date_time = db.Column(db.String(),index = True)
+
+
+class AvailableTimes(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    weekend = db.Column(db.Boolean, default=False, nullable=False)
+    appointment_hours = db.Column(db.String(), default ='')
+    specific_dates = db.Column(db.String(), default = '')
+    no_appointment = db.Column(db.String(), default = '') 
 
 def __repr__(self):
     return '<Appointments {}>'.format(self.name)

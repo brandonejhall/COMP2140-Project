@@ -18,6 +18,9 @@ mail = Mail(app)
 from .appointment.routes import appointment as appoi
 app.register_blueprint(appoi)
 
+from .administrative.routes import admin
+app.register_blueprint(admin)
+
 
 from .appointment import routes
-
+from .administrative import routes
