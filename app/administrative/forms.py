@@ -6,17 +6,17 @@ from wtforms.validators import DataRequired, Email
 
 
 class LoginForm(FlaskForm):
-    idnumber = StringField('name', [DataRequired()])
-    password = StringField('email', [DataRequired()])
+    usernumber = StringField('usernumber', [DataRequired()])
+    password = StringField('password', [DataRequired()])
     submit = SubmitField('submit')
 
 class EditAvail(FlaskForm):
-    weekends = BooleanField('Check to allow Weekend Appointments')
-    start_time = TimeField('Enter what time you would like appointments to start')
-    end_time = TimeField('Enter what time you would like bookings to end')
-    special_dates = DateField('Enter any date appointments are not allowed')
-    start_date = DateField('Enter the start of the range of unavailable dates')
-    end_date = DateField('Enter the end of the range of unavailable dates')
+    weekends = BooleanField('Weekend Appointments')
+    start_time = TimeField('Appointment Start Time')
+    end_time = TimeField('Appointment End Time')
+    special_dates = DateField('No Appointment Day')
+    start_date = DateField('Unavailable Dates Start')
+    end_date = DateField('Unavailable Dates End')
     submit = SubmitField('submit')
 
 

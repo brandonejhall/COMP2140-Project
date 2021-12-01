@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class = 'body1'>
+    <div id = body-head>
+    <form>
+    {% for event in events %}
+        <p>{{event}}</p>
+    {% endfor %}
+    </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+<div class = 'tab' style="overflow-x:auto;">
+<table>
+    <tr class = "row">
+    {% for header in headers %}
+        <th class ="head">{{header}}</th>
+    {% endfor %}
+    </tr>
+   
+    {% for data in sorted_lst %}
+    <tr class = "row">
+    {% for element in data%}
+        
+    <td class = "data">{{element}}</td>
+
+        
+        
+    {% endfor%}
+    </tr>
+    {% endfor %}
+    
+</table>
+</div>
+</body>
+{% endblock %}

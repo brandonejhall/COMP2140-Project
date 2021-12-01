@@ -73,7 +73,7 @@ def date_check(dt):
             w_end = True
 
     return [spec_ok,range_ok,e_day,w_end]
-#<link rel= "stylesheet" type = 'text/css' href = "{{ url_for('appoint.static',filename= 'styles.css') }}">
+
 def time_check(dt):
     time=dt.split()[-1].split(':')
     time_range =  AvailableTimes.query.first().appointment_hours.split()

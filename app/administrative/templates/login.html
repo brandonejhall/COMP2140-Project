@@ -15,34 +15,14 @@
                 <form action="" id="myform" action="" method="post" novalidate>
                         
             <div class="form-input">
-                {{ form.weekends.label }}
-                {{ form.weekends }}
+                {{ form.usernumber.label }}
+                {{ form.usernumber }}
             </div>
             <div class="form-input">
-                {{ form.start_time.label }}
-                {{ form.start_time }}
+                {{ form.password.label }}
+                {{ form.password }}
             </div>
-            <div class="form-input"></div>
-                {{ form.end_time.label }}
-                {{ form.end_time }}
-            </div>
-            <br>
-            <div class="form-input">
-                {{ form.special_dates.label }}
-                {{ form.special_dates }}
-            </div>
-            <br>
-            <div class="form-input">
-                {{ form.start_date.label }}
-                {{ form.start_date }}
-            </div>
-            <br>
-            <div class="form-input">
-                {{ form.end_date.label }}
-                {{ form.end_date }}
-            </div>
-       
-            <div class="form-button">>{{ form.submit() }}</div>
+            <div class="form-button">{{ form.submit() }}</div>
                         {% with messages = get_flashed_messages() %}
                             {% if messages %}
                                 {% for msg in messages %}

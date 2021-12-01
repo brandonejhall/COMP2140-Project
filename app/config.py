@@ -16,3 +16,6 @@ class Config(object):
     MAIL_USE_TLS = 1
     MAIL_USERNAME = 'careerservicesbooking@gmail.com'
     MAIL_PASSWORD = 'comp2140'
+
+    #PAGINATION
+    LOG_PER_PAGE = 5

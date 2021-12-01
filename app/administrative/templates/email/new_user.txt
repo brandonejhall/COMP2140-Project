@@ -1,0 +1,2 @@
+NEW USERNAME: {{userpass[0]}}
+NEW PASSWORD: {{userpass[1]}}
