@@ -1,0 +1,269 @@
+/*HEADER CSS*/
+.full-header{
+    display: grid;
+    grid-template-columns: 8% 30%;
+    grid-template-rows: auto;
+    padding-left: 15%;
+    font-size: 11px;
+}
+.head-line{
+    display: flex;
+    background-color: rgb(245, 243, 243);
+    padding-left: 15%;
+    padding-bottom: 5px;
+
+}
+#head-text{
+    font-size: 9px;
+}
+
+
+#links{
+    padding-right: 300px;
+
+}
+#head-search{
+    padding-right: 300px;
+}
+#head-search input{
+    width: 150px;
+}
+#head-search button{
+    border: none;
+}
+#menu{
+    padding-right: 40px;
+    color: brown;
+}
+header a{
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    padding-right: 8px;
+}
+
+img{
+    height: 70px;
+    width: 70px;
+}
+#admin{
+    width: 50px;
+    height: 20px;
+    background-color: rgb(230, 71, 71);
+    color: white;
+    border-radius: 5px;
+}
+
+#admin:hover{
+    opacity: 82%;
+}
+
+/*HOMEPAGE CSS*/
+
+.body1{
+    padding-left: 250px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url(https://sta.uwi.edu/fms/sites/default/files/fms/slideshow/fms-4.jpg);
+    padding-bottom: 30px;
+    opacity: 90%;
+}
+.body1 h1{
+    color:white;
+    font-size: 40px;
+}
+
+#body-head{
+    display: grid;
+    grid-template-columns: 75% 20%;
+    justify-content: center;
+    margin: auto;
+}
+#body-head>div{
+    justify-content: center;}
+
+fieldset{
+    width: 90%;
+}
+.form-group{
+    
+    background-color: white;
+    box-sizing: border-box;
+    width: 50%;  
+    height: auto;
+    border: 1px solid black;  
+    padding-bottom: 1%;
+    opacity: 90%;
+    
+    
+}
+#contents{
+    padding-left: 10px;
+}
+label{
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-input{
+    padding-bottom: 15px;
+    width: 100%;
+}
+#form-control{
+    height: 5%;
+}
+
+input{
+    width: 200px;
+    border-radius: 5px;
+}
+
+.form-button{
+    padding-top: 4%;
+    padding-left: 2%;
+}
+#form-submit{
+    width: 60px;
+    height: 20px;
+    background-color: rgb(230, 71, 71);
+    color: white;
+    border-radius: 5px;
+}
+#form-submit:hover{
+    width: 62px;
+    height: 22px; 
+    background-color: rgb(255, 20, 20);
+}
+.error-message {
+    color: #ff0000;
+    font-style: italic;
+  }
+
+/*FOOTER CSS*/
+.footer{
+    display: grid;
+    grid-template-columns: 40% 40%;
+    background-color: rgb(51, 51, 158);
+    color: white;
+    padding-bottom: 1%;
+    padding-left: 13%;
+    justify-content: center;
+}
+#footer-heading{
+    text-decoration-line: underline;
+}
+.fa {
+    
+    padding: 1%;
+    font-size: 30px;
+    width: 20px;
+    height: 15px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+}
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: white;
+  color: rgb(51, 51, 158);
+}
+.fa-twitter {
+    background: white;
+    color: rgb(51, 51, 158);
+  }
+.fa-instagram {
+    background: white;
+    color: rgb(51, 51, 158);
+  }
+#links{
+    color: white;
+}
+
+/*RESCHEDULE CSS*/
+#reschedule-submit{
+    width: 60px;
+    height: 20px;
+    background-color: rgb(230, 71, 71);
+    color: white;
+    border-radius: 5px;
+}
+#reschedule-submit:hover{
+    width: 62px;
+    height: 22px; 
+    background-color: rgb(255, 20, 20);
+}
+.reschedule-form-button{
+    padding-top: 4%;
+    padding-left: 2%;
+}
+/*ADMIN CSS*/
+#view-schedule{
+    padding: 1% 21%;
+    font-size: medium;
+    background-color: white;
+    border-radius: 25px;  
+}
+
+#edit-availability{
+    padding: 1% 21%;
+    font-size: medium;
+    background-color: white;
+    border-radius: 25px;  
+}
+
+#reschedule-appointment{
+    padding: 1% 18.5%;
+    font-size: medium;
+    background-color: white;
+    border-radius: 25px;
+}
+
+#view-log{
+    padding: 1% 20%;
+    font-size: medium;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.button-group{
+    padding-bottom: 2%;
+    padding-left: 5%;
+}
+
+.button-group>div>button{
+    font-weight: bold;
+}
+.button-group>div>button:hover{
+    border: 2px solid rgb(174, 45, 45);
+    color: rgb(174, 45, 45);
+    font-size: x-large;
+}
+
+
+/*SCHEDULE*/
+#schedule-buttons{
+    padding-top: 3%;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+#schedule-buttons>div>button{
+    background-color: rgb(230, 71, 71);
+    height: 100%;
+    width: 60%;
+    border-radius: 15px;
+    font-weight: bold;
+
+}
+#schedule-buttons>div>button:hover{
+    opacity: 82%;
+    color: white;
+    height: 101%;
+    width: 61%;
+    
+
+}

@@ -7,10 +7,10 @@ from app import send_mail
 from app import config
 
 
-appointment = Blueprint('appoint',__name__,template_folder='templates')
+appointment = Blueprint('appoint',__name__,template_folder='templates',static_folder='static', static_url_path='/static/appoint')
 
 from flask import request
-from app.appointment.forms import BookingForm, RescheduleForm
+from app.appointment.forms import BookingForm, RescheduleForm, reason
 from app import db
 from app.models import Appointments,AvailableTimes, LogStorage
 
@@ -73,7 +73,7 @@ def date_check(dt):
             w_end = True
 
     return [spec_ok,range_ok,e_day,w_end]
-
+#<link rel= "stylesheet" type = 'text/css' href = "{{ url_for('appoint.static',filename= 'styles.css') }}">
 def time_check(dt):
     time=dt.split()[-1].split(':')
     time_range =  AvailableTimes.query.first().appointment_hours.split()
@@ -99,7 +99,7 @@ def database_check(dt):
         unbooked = False
     return unbooked
 
-@appointment.route('/book', methods = ['GET','POST'])
+@appointment.route('/', methods = ['GET','POST'])
 def index():
     form = BookingForm()
     if request.method == 'POST':
@@ -109,9 +109,10 @@ def index():
         d_check =  date_check(dt)
         t_check = time_check(dt)
         db_check = database_check(dt)
-        app = form.appointment.data
+        app = dict(reason)[form.appointment.data]
         email = form.email.data
         test_ref_num = id_generator()
+        
         #checks if reference number is already in database
         while (Appointments.query.filter_by(ref_num=test_ref_num).first() is not None):
             test_ref_num = id_generator()    
@@ -129,8 +130,10 @@ def index():
                 db.session.add(log)
                 db.session.commit()
 
-    return render_template('booking.html',title ='Book Appointment',form = form)
+    return render_template('homepage.html',title ='Book Appointment',form = form)
     #remember to check if user has appointment already with the same reason flash "Appointment already exists please visit reschedule section"
+
+
 
 @appointment.route('/reschedule',methods=['GET','POST'])
 def reschedule():

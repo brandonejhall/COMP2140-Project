@@ -16,7 +16,7 @@ migrate = Migrate(app, db)
 mail = Mail(app)
 
 from .appointment.routes import appointment as appoi
-app.register_blueprint(appoi)
+app.register_blueprint(appoi, url_prefix = '')
 
 from .administrative.routes import admin
 app.register_blueprint(admin)

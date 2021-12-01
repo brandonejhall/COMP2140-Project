@@ -1,23 +1,46 @@
 {%extends 'base.html'%}
 
 {% block content%}
-<h1>{{title}}</h1>
-    <form action="" method="post" novalidate>
+<body>
+    
+    <div class="body1">
+        <div id="body-head">
+            <h1>Placement and Career Services</h1>
+            
+        </div>
 
-        <p>
-            {{ form.ref_number.label }}<br>
-            {{ form.ref_number(size=32) }}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=50) }}
-        </p>
-        <p>
-            {{form.new_date_time.label}}
-            {{form.new_date_time()}}
-        </p>
-       
-        <p>{{ form.submit() }}</p>
+        <div class="form-group">
+            <div id="contents">
+                <h2>Career Services Reschedule Form</h2>
+                <form action="" id="myform" action="" method="post" novalidate>
+                    <div class="form-input">
+                        {{ form.email.label }}
+                        {{ form.email(size=50) }}
+                    </div>
+                    <div class="form-input">
+                        {{ form.ref_number.label }}
+                        {{ form.ref_number }}
+                    </div>
+                    <div class="form-input">
+                        {{form.new_date_time.label}}
+                        {{form.new_date_time()}}
+                    </div>     
+                    <div class="form-button">
+                        {{ form.submit() }}
+                    </div>      
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <p>{{msg}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </form>                 
+            </div>
+              
+        </div>
         
-    </form>
+    </div>
+    
+</body>
 {% endblock %}
