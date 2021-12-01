@@ -12,7 +12,7 @@ appointment = Blueprint('appoint',__name__,template_folder='templates')
 from flask import request
 from app.appointment.forms import BookingForm, RescheduleForm
 from app import db
-from app.models import Appointments,AvailableTimes
+from app.models import Appointments,AvailableTimes, LogStorage
 
 def id_generator(size=12, c=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(c) for _ in range(size))
@@ -22,6 +22,8 @@ def date_check(dt):
     date_time = datetime.date(int(dt_check[0]),int(dt_check[1]),int(dt_check[2]))
     check = AvailableTimes.query.first()
     range = check.no_appointment.split()
+    weekend = check.weekend
+    earliest_day=datetime.date.today() + datetime.timedelta(days=1)
     # checks if date ranges were set and capture the ranges in which appointments cannot be set
     if range[0] != 'None':
         start = datetime.date(int(range[0].split('-')[0]),int(range[0].split('-')[1]),int(range[0].split('-')[2]))
@@ -58,8 +60,44 @@ def date_check(dt):
             spec_ok = True
     else:
         spec_ok = True
-    return [spec_ok,range_ok]
+    if earliest_day>date_time:
+        e_day=False
+    else:
+        e_day = True
 
+    if (not weekend):
+        if date_time.weekday()>4:
+            flash('No Weekend Appointments are allowed','error')
+            w_end = False
+        else:
+            w_end = True
+
+    return [spec_ok,range_ok,e_day,w_end]
+
+def time_check(dt):
+    time=dt.split()[-1].split(':')
+    time_range =  AvailableTimes.query.first().appointment_hours.split()
+    start = int(time_range[0].split(':')[0])
+    end = int(time_range[1].split(':')[0])
+    if (int(time[1])== 0 or int(time[1])== 30):
+        time_ok = True
+    else:
+        flash('Time should be at the start or the middle of an hour','error') 
+        time_ok = False 
+
+    if start<int(time[0])<end:
+        t_range = True
+    else:
+        flash('Enter a time between 9am and 4pm','error')
+        t_range = False
+    return [time_ok,t_range] 
+
+def database_check(dt):
+    if (Appointments.query.filter_by(date_time = dt).first() is None):
+        unbooked = True
+    else:
+        unbooked = False
+    return unbooked
 
 @appointment.route('/book', methods = ['GET','POST'])
 def index():
@@ -68,7 +106,9 @@ def index():
 
         name = form.name.data
         dt = str(form.date_time.data)
-        check =  date_check(dt)
+        d_check =  date_check(dt)
+        t_check = time_check(dt)
+        db_check = database_check(dt)
         app = form.appointment.data
         email = form.email.data
         test_ref_num = id_generator()
@@ -77,7 +117,8 @@ def index():
             test_ref_num = id_generator()    
         else:
             #checks if dates entered are valid
-            if (check[0] and check[1]):
+            if (d_check[0] and d_check[1] and d_check[2] and d_check[3] and t_check[0] and t_check[1] and db_check ):
+                log = LogStorage (logged = f"{name} booked an appointment for {app} at {dt}")
                 booking = Appointments(ref_num = test_ref_num,name = name,email = email,app_type = app,date_time = dt)
                 txt = render_template('emails_notifs/book.txt',booking = booking)
                 ht = render_template('emails_notifs/book.html',booking = booking)
@@ -85,6 +126,7 @@ def index():
                 flash('Confirmation email sent','info')
             
                 db.session.add(booking)
+                db.session.add(log)
                 db.session.commit()
 
     return render_template('booking.html',title ='Book Appointment',form = form)
@@ -97,11 +139,17 @@ def reschedule():
         email = form.email.data
         ref_num = form.ref_number.data
         dt = str(form.new_date_time.data)
+        d_check =  date_check(dt)
+        t_check = time_check(dt)
+        db_check = database_check(dt)
         app = Appointments.query.filter_by(ref_num=ref_num).first()
         if (app is None):
-            pass
+            flash ('No appointment exists with the given reference number','error')
         if app.email == email:
-            app.date_time = dt
-            db.session.commit()
+            if (d_check[0] and d_check[1] and d_check[2] and d_check[3] and t_check[0] and t_check[1] and db_check ):
+                log = LogStorage (logged = f"{app.name} rescheduled an appointment for {app.date_time} to {dt}")
+                app.date_time = dt
+                db.session.add(log)
+                db.session.commit()
     return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
     

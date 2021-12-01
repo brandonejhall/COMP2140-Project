@@ -1,6 +1,7 @@
 from wtforms.fields.datetime import DateField
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 class AdminUser(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -35,6 +36,7 @@ class AvailableTimes(db.Model):
 class LogStorage(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     logged = db.Column(db.String(), index =True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now())
 
 
 def __repr__(self):
