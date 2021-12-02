@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-login = "*"
+flask-wtf = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+flask-mail = "*"
 
 [dev-packages]
 
