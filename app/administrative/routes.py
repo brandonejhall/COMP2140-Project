@@ -52,6 +52,7 @@ def log():
 
 week = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 headers = ['DateTime','Day','Name','Reason','reference number']
+@login_required
 @admin.route('/generate', methods = ['GET','POST'])
 def generate():
     #booking = Appointments.query.all()[0].date_time.split()
@@ -82,8 +83,9 @@ def pass_generator(size=10, c=string.ascii_uppercase + string.digits):
 def login():
     form = LoginForm()
     if request.method == 'POST':
+        if current_user.is_authenticated:
+            return redirect(url_for('administration.admin'))
         user = form.usernumber.data
-        
         passw = form.password.data
         if user == '1001071029':
             password = str(pass_generator())
@@ -108,7 +110,7 @@ def login():
                 flash('Incorrect Username or Password')
                 return redirect(url_for('administration.login'))
             login_user(check)
-            return redirect(url_for('index'))
+            return redirect(url_for('administration.admin'))
     return render_template('login.html', title = 'Sign In', form = form)
 
 
