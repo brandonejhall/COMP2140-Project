@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type = 'text/css' href = "{{ url_for('administration.static',filename= 'styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>HomePage</title>
+</head>
+
+    <header>
+        <div class="head-line">
+            <div id="menu">
+                <label for="reason">SELECT A CAMPUS </label>
+                <select class="form-control" name="reason" id="reason">
+                    <option value="a">Mona</option>
+                    <option value="b">Cave Hill</option>
+                    <option value="c">Open Campus</option>
+                </select>
+            </div>
+            <div id="links">
+                <a href="https://www.mona.uwi.edu/visitors">Visit UWI</a>
+                <a href="https://www.mona.uwi.edu/mail">Email</a>
+                <a href="https://www.mona.uwi.edu/directory">Directory</a>
+                <a href="https://www.google.com/maps/@18.0062045,-76.7452329,17z">Campus Map</a>
+                <a href="https://www.mona.uwi.edu/help">Help</a>
+            </div>
+            <div id="head-search">
+                <input type="text" placeholder="Enter Search Term...">
+                <button id="head-search-btn" ><i class="fa">&#xf002;</i></button>
+                
+            </div>
+            <button id="admin">Admin</button>
+        </div>
+        <div class="full-header">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Coat_of_arms_of_the_University_of_the_West_Indies.png/220px-Coat_of_arms_of_the_University_of_the_West_Indies.png" alt="Image of UWI logo">
+            <div id="head-text"> 
+                <h1>THE UNIVERSITY OF THE WEST INDIES</h1>
+                <h2>AT MONA, JAMAICA</h2>
+            </div>
+        </div>
+         
+    </header>
+    
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <div class="footer">    
+            <div id="contact">
+                <h2 id="footer-heading">Placement and Career Services</h2>
+                <address>
+                    The University of the West Indies <br>
+                    Mona, KIngston 7, Jamaica <br>
+                    Tel:(876)927-1650 <br>
+                    Fax: (876)977-3725
+                    <p>Email: <a href="placement@uwimona.edu.jm?subject=Feedback&body=Message" id="links">placement@uwimona.edu.jm</a></p>
+                </address>
+            </div>
+            <div id="socials">
+                <h2 id="footer-heading">Connect with us</h2>
+                <p><a href="https://www.facebook.com/UWIPCS/" class="fa fa-facebook"></a> Facebook </p>
+                <p><a href="https://www.instagram.com/uwi_placement/" class="fa fa-instagram"></a> Instagram </p>
+                <p><a href="https://twitter.com/UWIPlacement" class="fa fa-twitter"></a> Twitter </p>
+                <a id="links" href="https://support.mona.uwi.edu/visitor/index.php?/LiveChat/Chat/Request/_sessionID=hic47gicb6nbjgk3qgx4vgmfkdppigo8/_proactive=0/_filterDepartmentID=7/_randomNumber=42/_fullName=/_email=/_promptType=chat">Live Chat</a>
+            </div>
+        </div>
+    </footer>
+
+</html>

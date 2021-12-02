@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<body>
+    
+    <div class="body1">
+        <div id="body-head">
+            <h1>Placement and Career Services</h1>
+            
+        </div>
+
+        <div class="form-group">
+            <div id="contents">
+                <h2>Career Services Reschedule Form</h2>
+                <form action="" id="myform" action="" method="post" novalidate>
+                    <div class="form-input">
+                        {{ form.email.label }}
+                        {{ form.email(size=50) }}
+                    </div>
+                    <div class="form-input">
+                        {{ form.ref_number.label }}
+                        {{ form.ref_number }}
+                    </div>
+                    <div class="form-input">
+                        {{form.new_date_time.label}}
+                        {{form.new_date_time()}}
+                    </div>     
+                    <div class="form-button">
+                        {{ form.submit() }}
+                    </div>      
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <p>{{msg}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </form>                 
+            </div>
+              
+        </div>
+        
+    </div>
+    
+</body>
+{% endblock %}

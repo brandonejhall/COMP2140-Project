@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+<style>
+.row:nth-child(even)
+{
+    background-color: grey;
+    color: black;
+}
+
+.header{
+    text-align:left;
+    color: black;
+    
+}
+
+.data{
+    padding:8px;
+    color: black;
+}
+
+.tab{
+    color:whitesmoke;
+    color:black;
+    display: flex;
+    justify-content: center;
+    overflow:scroll; 
+    height:400px;
+}
+</style>
+</head>
+<div class = 'tab' ">
+<table>
+    <tr class = "row">
+    {% for header in headers %}
+        <th class ="head">{{header}}</th>
+    {% endfor %}
+    </tr>
+   
+    {% for data in sorted_lst %}
+    <tr class = "row">
+    {% for element in data%}
+        
+    <td class = "data">{{element}}</td>
+
+        
+        
+    {% endfor%}
+    </tr>
+    {% endfor %}
+    
+</table>
+</div>
+
+{% endblock %}

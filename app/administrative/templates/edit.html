@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+
+
+
+{% block content %}
+<body>
+    <div class="body1">
+        <div id="body-head">
+            <h1>Placement and Career Services Booking Platform</h1>
+            
+        </div>
+        <div class="form-group">
+            <div id="contents">
+                <h2>{{title}}</h2>
+                <form action="" id="myform" action="" method="post" novalidate>
+                        
+            <div class="form-input">
+                {{ form.weekends.label }}
+                {{ form.weekends }}
+            </div>
+            <div class="form-input">
+                {{ form.start_time.label }}
+                {{ form.start_time }}
+            </div>
+            <div class="form-input"></div>
+                {{ form.end_time.label }}
+                {{ form.end_time }}
+            </div>
+            <br>
+            <div class="form-input">
+                {{ form.special_dates.label }}
+                {{ form.special_dates }}
+            </div>
+            <br>
+            <div class="form-input">
+                {{ form.start_date.label }}
+                {{ form.start_date }}
+            </div>
+            <br>
+            <div class="form-input">
+                {{ form.end_date.label }}
+                {{ form.end_date }}
+            </div>
+       
+            <div class="form-button">>{{ form.submit() }}</div>
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for msg in messages %}
+                                    <p>{{msg}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                </form>                 
+            </div>  
+                     
+        </div>
+        
+    </div>
+</body>
+    
+    
+
+
+
+{% endblock %}
+
+
+
+
+

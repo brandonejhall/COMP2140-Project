@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+
+
+
+{% block content %}
+<body>
+    <div class="body1">
+        <div id="body-head">
+            <h1>Placement and Career Services Booking Platform</h1>
+            
+        </div>
+        <div class="form-group">
+            <div id="contents">
+                <h2>{{title}}</h2>
+                <form action="" id="myform" action="" method="post" novalidate>
+                        
+            <div class="form-input">
+                {{ form.usernumber.label }}
+                {{ form.usernumber }}
+            </div>
+            <div class="form-input">
+                {{ form.password.label }}
+                {{ form.password }}
+            </div>
+            <div class="form-button">{{ form.submit() }}</div>
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for msg in messages %}
+                                    <p>{{msg}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                </form>                 
+            </div>  
+                     
+        </div>
+        
+    </div>
+</body>
+    
+    
+
+
+
+{% endblock %}
+
+
+
+
+
