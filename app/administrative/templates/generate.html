@@ -1,7 +1,37 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<body>
-<div class = 'tab' style="overflow-x:auto;">
+
+<head>
+<style>
+.row:nth-child(even)
+{
+    background-color: grey;
+    color: black;
+}
+
+.header{
+    text-align:left;
+    color: black;
+    
+}
+
+.data{
+    padding:8px;
+    color: black;
+}
+
+.tab{
+    color:whitesmoke;
+    color:black;
+    display: flex;
+    justify-content: center;
+    overflow:scroll; 
+    height:400px;
+}
+</style>
+</head>
+<div class = 'tab' ">
 <table>
     <tr class = "row">
     {% for header in headers %}
@@ -23,5 +53,5 @@
     
 </table>
 </div>
-</body>
+
 {% endblock %}
