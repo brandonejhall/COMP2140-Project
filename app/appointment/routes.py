@@ -150,7 +150,10 @@ def reschedule():
             flash ('No appointment exists with the given reference number','error')
         if app.email == email:
             if (d_check[0] and d_check[1] and d_check[2] and d_check[3] and t_check[0] and t_check[1] and db_check ):
+                txt = render_template('emails_notifs/reschedule.txt',booking = app)
+                ht = render_template('emails_notifs/reschedule.html',booking = app)
                 log = LogStorage (logged = f"{app.name} rescheduled an appointment for {app.date_time} to {dt}")
+                send_mail.send_email('Career Service Appointment',config.Config.MAIL_USERNAME,[email],txt,ht)
                 app.date_time = dt
                 db.session.add(log)
                 db.session.commit()

@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint,render_template,session,redirect,flash
 from flask_login import current_user, login_user
 from flask.helpers import url_for
@@ -19,8 +20,9 @@ from app import db
 from app.models import AdminUser, Appointments,AvailableTimes, LogStorage
 
 
-@login_required
+
 @admin.route('/edit', methods = ['GET','POST'])
+@login_required
 def editTimes():
     form = EditAvail()
     if request.method == 'POST':
@@ -41,8 +43,9 @@ def editTimes():
             times.no_appointment = off_days
     return render_template('edit.html', title = 'Edit Times',form = form)
 
-@login_required
+
 @admin.route('/log', methods= ['GET','POST'])
+@login_required
 def log():
     log = LogStorage.query.all()
     events = []
@@ -52,8 +55,9 @@ def log():
 
 week = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 headers = ['DateTime','Day','Name','Reason','reference number']
-@login_required
+
 @admin.route('/generate', methods = ['GET','POST'])
+@login_required
 def generate():
     #booking = Appointments.query.all()[0].date_time.split()
     #date = booking[0].split('-')
@@ -70,7 +74,10 @@ def generate():
     sorted_lst = sorted(apps,key = lambda x:x[0])
     return render_template('generate.html',sorted_lst = sorted_lst, headers = headers)
     
-
+@admin.route('/admini')
+@login_required
+def admini():
+    return render_template('admin.html')
 
 
 def user_generator(size=6, c=string.ascii_uppercase + string.digits):
@@ -84,7 +91,7 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if current_user.is_authenticated:
-            return redirect(url_for('administration.admin'))
+            return redirect(url_for('administration.admini'))
         user = form.usernumber.data
         passw = form.password.data
         if user == '1001071029':
@@ -110,7 +117,7 @@ def login():
                 flash('Incorrect Username or Password')
                 return redirect(url_for('administration.login'))
             login_user(check)
-            return redirect(url_for('administration.admin'))
+            return redirect(url_for('administration.admini'))
     return render_template('login.html', title = 'Sign In', form = form)
 
 

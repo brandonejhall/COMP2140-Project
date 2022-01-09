@@ -1,0 +1,5 @@
+Dear {{booking.name}},
+
+APPOINTMENT REASON: {{booking.app_type}}
+DATE OF APPOINTMENT: {{booking.date_time}}
+REFERENCE NUMBER: {{booking.ref_num}}
