@@ -1,12 +1,10 @@
 import re
-from stat import ST_ATIME
 from flask import Blueprint,render_template,session,redirect,flash
 from flask_login import current_user, login_user
 from flask.helpers import url_for
 import string
 import random
 import datetime
-from datetime import date
 from operator import itemgetter 
 
 from flask_login.utils import login_required
@@ -16,10 +14,10 @@ from app import config
 admin = Blueprint('administration',__name__,template_folder='templates',static_url_path='/static/administration')
 
 from flask import request
-from app.administrative.forms import LoginForm,EditAvail,MockInterviewSetupForm
+from app.administrative.forms import LoginForm,EditAvail
 
 from app import db
-from app.models import AdminUser, Appointments,AvailableTimes, LogStorage, MockInterviewSetup,MockInterviewSignUp
+from app.models import AdminUser, Appointments,AvailableTimes, LogStorage
 
 
 
@@ -77,7 +75,7 @@ def generate():
     return render_template('generate.html',sorted_lst = sorted_lst, headers = headers)
     
 @admin.route('/admini')
-@login_required
+#@login_required
 def admini():
     return render_template('admin.html')
 
@@ -123,50 +121,8 @@ def login():
     return render_template('login.html', title = 'Sign In', form = form)
 
 
-@admin.route('/mockinterview', methods = ['GET','POST'])
-def mock_setup():
-    form = MockInterviewSetupForm()
-    if request.method == 'POST':
-        s_date = form.start_date.data
-        e_date = form.end_date.data
-        s_time = form.start_time.data
-        e_time = form.end_time.data
-        b_time = form.breaktime.data
-        interval = form.interval.data
-        present = date.today()
-        companies = form.companies.data
-        if e_date<s_date:
-            flash('Mock Interview End Day Error')
-        elif s_date<=present or e_date<=present:
-            flash('Cannot select present or prior dates')
-        elif b_time<s_time or b_time>e_time:
-            flash('Break Time needs to be inbetween start and end time')
-        elif e_date == None or s_date == None or s_time == None or e_time == None or b_time == None or interval == None:
-            flash ("All data needs to be entered")
-        else:
-            row_count = MockInterviewSetup.query.count()
-            if row_count <= 1:
-                new_times = MockInterviewSetup(start_date=str(s_date),end_date=str(e_date),start_time=str(s_time),end_time=str(e_time),
-                break_time=str(b_time),interval=interval,companies = companies)
-                db.session.add(new_times)
-                db.session.commit()
-                print("DONE!")   
-            else:
-                setup = MockInterviewSetup.query.first()
-                setup.start_date= str(s_date)
-                setup.end_date = str(e_date)
-                setup.start_time= str(s_time)
-                setup.end_time = str(e_time)
-                setup.break_time = str(b_time)
-                setup.interval = interval
-                setup.companies = companies
-                print("DONE")
-    return render_template('mockinterview_setup.html', title = 'Mock Interview Setup',form = form)
 
-@admin.route('/mocktimetable', methods = ['GET','POST'])
-def mock_table():
-    MockTable = MockInterviewSignUp.query.all()
-    print(type(MockTable[0]))
-    print(MockTable[0])
-    return render_template('mock_table.html', title = "Mock Interview Timetable")
+
+
+
     
