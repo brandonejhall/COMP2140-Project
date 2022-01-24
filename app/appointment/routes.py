@@ -1,21 +1,76 @@
-from flask import Blueprint,render_template,session,redirect,flash
+from flask import Blueprint,render_template,session,redirect,flash,request,jsonify
 from flask.helpers import url_for
 import string
 import random
 import datetime
 from app import send_mail
 from app import config
+from datetime import datetime,timedelta
 
 
 appointment = Blueprint('appoint',__name__,template_folder='templates',static_folder='static', static_url_path='/static/appoint')
 
 from flask import request
-from app.appointment.forms import BookingForm, RescheduleForm, reason
+from app.appointment.forms import BookingForm, MockInterviewSignUp, RescheduleForm, MIsignup, reason
 from app import db
-from app.models import Appointments,AvailableTimes, LogStorage
+from app.models import Appointments,AvailableTimes, LogStorage, MockInterviewSetup,MockInterviewSignUp
 
 def id_generator(size=12, c=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(c) for _ in range(size))
+def mockdays():
+    mock = MockInterviewSetup.query.first()
+    sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
+    edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
+    day_range = (edate - sdate).days
+    lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
+    return lst
+
+def mockslots():
+    mock = MockInterviewSetup.query.first()
+    stime = mock.start_time
+    etime = mock.end_time
+    inter = mock.interval
+    bt = mock.break_time
+    tm = datetime.strptime(stime, '%H:%M:%S')
+    etm = datetime.strptime(etime, '%H:%M:%S')
+    num_slots = int(((etm-tm).total_seconds()/60)//inter)
+    print(num_slots)
+    slots = [str((tm + timedelta(minutes = (int(inter)*x))).time()) for x in range(0,num_slots+1)]
+    
+    return slots
+
+def checkavailslots(dt):
+    mock = MockInterviewSetup.query.first()
+    mock_signup = MockInterviewSignUp.query.all()
+    companies = mock.companies.split(",")
+    avail = []
+    slots = mockslots()
+    for slot in slots:
+        check = MockInterviewSignUp.query.filter_by(time = slot,date = dt).all()
+        compa=[check.companies for comp in check]
+        availcomp = list(set(companies).difference(compa))
+        if availcomp != []:
+            avail.append(slot)
+        else:
+            pass
+    
+    return avail
+
+def checkcomps(dt,tm):
+    mock = MockInterviewSetup.query.first()
+    companies = mock.companies.split(",")
+    check = MockInterviewSignUp.query.filter_by(time = tm,date = dt).all()
+    compa=[comp.company for comp in check]
+    availcomp = list(set(companies).difference(compa))
+    finalcomp = dict([(availcomp.index(x),x) for x in availcomp])
+    return finalcomp
+
+
+       
+
+
+
+    
 
 def date_check(dt):
     dt_check = dt.split()[0].split('-')
@@ -134,7 +189,6 @@ def index():
     #remember to check if user has appointment already with the same reason flash "Appointment already exists please visit reschedule section"
 
 
-
 @appointment.route('/reschedule',methods=['GET','POST'])
 def reschedule():
     form = RescheduleForm()
@@ -159,3 +213,34 @@ def reschedule():
                 db.session.commit()
     return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
     
+@appointment.route('/mockinterviewsignup',methods=['GET','POST'])
+def mockinterviewsignup():
+    days = mockdays()
+    slots = mockslots()
+    if request.method == 'POST':
+        name = request.form['fname']+" "+request.form['lname']
+        major = request.form['major']
+        date = request.form['days']
+        slot = request.form['slots']
+        company = request.form['companies']
+        if name == '' or major == '' or date == '' or slot == '' or company == '':
+            flash ('All data must be filled out on this form','error')
+        else:
+            misu = MockInterviewSignUp(name = name, major = major,date =date, time =slot, company = company)
+            db.session.add(misu)
+            db.session.commit()
+    return render_template('mockinterview_signup.html', title = 'Mock Interview SignUp', slots = slots, days = days)
+
+@appointment.route('/slotgenerator',methods=['GET','POST'])
+def slotcheck():
+    if request.method == 'GET':
+        day=request.args.get('day')
+        time=request.args.get('time')
+        if time == '':
+            slots = ' '.join([str(elem) for elem in checkavailslots(day)])
+            return slots
+        else:
+            print(checkcomps(day,time))
+            print(type(checkcomps(day,time)))
+            #companies = ' '.join([str(elem) for elem in checkcomps(day,time)])
+            return jsonify(checkcomps(day,time))

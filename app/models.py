@@ -44,6 +44,26 @@ class LogStorage(db.Model):
     logged = db.Column(db.String(), index =True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now())
 
+class MockInterviewSetup(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    start_date = db.Column(db.String(), index = True)
+    end_date = db.Column(db.String(), index = True)
+    start_time = db.Column(db.String(), index = True)
+    end_time = db.Column(db.String(), index = True)
+    break_time = db.Column(db.String(), index =True)
+    interval = db.Column(db.Integer, index = True)
+    companies = db.Column(db.String(), index = True)
+
+class MockInterviewSignUp(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(), index = True)
+    major = db.Column(db.String(), index = True)
+    date = db.Column(db.String(), index = True)
+    time = db.Column(db.String(), index = True)
+    company = db.Column(db.String(), index = True)
+
+
+
 
 def __repr__(self):
     return '<Appointments {}>'.format(self.name)

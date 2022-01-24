@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField,DateTimeLocalField,EmailField,SelectField
-from wtforms.fields.datetime import TimeField
+from wtforms.fields.datetime import DateField, TimeField
 from wtforms.validators import DataRequired, Email
 
 reason = [(1,'Individual Career Counselling'),(2,'Career Protfolio Guidance'),(3,'Resume Advising/Reviews'),
@@ -8,6 +8,8 @@ reason = [(1,'Individual Career Counselling'),(2,'Career Protfolio Guidance'),(3
     (6,'Job Search Assistance'),(7,'Job Referrals-Summer/Part-Time/Full-Time'),(8,'Internship Coordination'),
     (9,'Employment Compensation Package Advising'),(10,'Career Explorations Opportunities'),(11,'Career Development/World of Work Seminars'),
     (12,'Overseas Work & Travel Programme')]
+
+
 
 class BookingForm(FlaskForm):
     name = StringField('Name', [DataRequired()])
@@ -20,6 +22,20 @@ class RescheduleForm(FlaskForm):
     email = EmailField('Email', [DataRequired()])
     ref_number = StringField('Reference number', [DataRequired()])
     new_date_time = DateTimeLocalField("Date", [DataRequired()], format='%Y-%m-%dT%H:%M')
+    submit = SubmitField('Submit')
+
+class MockInterviewSignUp(FlaskForm):
+    stu_name = StringField('Full Name:', [DataRequired()])
+    major = StringField('Major:', [DataRequired()])
+    date = SelectField(u'Day', choices=reason, validate_choice = True, coerce=int)
+    company =  SelectField(u'Company', choices=reason, validate_choice = True, coerce=int)
+    time =  SelectField(u'Reason', choices=reason, validate_choice = True, coerce=int)
+    submit = SubmitField('Submit')
+
+class MIsignup(FlaskForm):
+    name = StringField('Full Name', [DataRequired()])
+    major = StringField('Major', [DataRequired()])
+    
     submit = SubmitField('Submit')
 
     
