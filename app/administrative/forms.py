@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField,DateTimeLocalField,EmailField
+from wtforms import StringField, SubmitField,DateTimeLocalField,EmailField,IntegerField
 from wtforms.fields.datetime import DateField, TimeField
 from wtforms.fields.simple import BooleanField
 from wtforms.validators import DataRequired, Email
@@ -20,7 +20,6 @@ class EditAvail(FlaskForm):
     submit = SubmitField('submit')
 
 
-<<<<<<< HEAD
 class MockInterviewSetupForm(FlaskForm):
     start_date = DateField('Start Date: ',[DataRequired()],format='%Y-%m-%d')
     end_date = DateField('End Date: ',[DataRequired()],format='%Y-%m-%d')
@@ -31,8 +30,6 @@ class MockInterviewSetupForm(FlaskForm):
     extrabreak = TimeField('Extra Break(HH:MM)',[DataRequired()])
     companies = StringField('Companies', [DataRequired()])
     submit = SubmitField('submit')
-=======
->>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 
 
 

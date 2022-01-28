@@ -44,7 +44,6 @@ class LogStorage(db.Model):
     logged = db.Column(db.String(), index =True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now())
 
-<<<<<<< HEAD
 class MockInterviewSetup(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     start_date = db.Column(db.String(), index = True)
@@ -68,8 +67,6 @@ class MockInterviewSignUp(db.Model):
 
 
 
-=======
->>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 
 def __repr__(self):
     return '<Appointments {}>'.format(self.name)

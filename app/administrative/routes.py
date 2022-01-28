@@ -1,20 +1,13 @@
 import re
-<<<<<<< HEAD
 from stat import ST_ATIME
 from flask import Blueprint,render_template,session,redirect,flash,jsonify
-=======
-from flask import Blueprint,render_template,session,redirect,flash
->>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 from flask_login import current_user, login_user
 from flask.helpers import url_for
 import string
 import random
 import datetime
-<<<<<<< HEAD
 from datetime import date
 from datetime import datetime,timedelta
-=======
->>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 from operator import itemgetter 
 
 from flask_login.utils import login_required
@@ -25,12 +18,12 @@ from app import config
 admin = Blueprint('administration',__name__,template_folder='templates',static_url_path='/static/administration')
 
 from flask import request
-from app.administrative.forms import LoginForm,EditAvail
+from app.administrative.forms import LoginForm,EditAvail,MockInterviewSetupForm
 
 
 
 from app import db
-from app.models import AdminUser, Appointments,AvailableTimes, LogStorage
+from app.models import AdminUser, Appointments,AvailableTimes, LogStorage,MockInterviewSetup,MockInterviewSignUp
 
 def mockdays():
     mock = MockInterviewSetup.query.first()
@@ -148,7 +141,6 @@ def login():
     return render_template('login.html', title = 'Sign In', form = form)
 
 
-<<<<<<< HEAD
 @admin.route('/mockinterview', methods = ['GET','POST'])
 @login_required
 def mock_setup():
@@ -197,12 +189,6 @@ def mock_setup():
 def mock_table():
     MockTable = MockInterviewSignUp.query.all()
     days = mockdays()
-=======
-
-
-
-
->>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
     
     return render_template('mock_table.html', title = "Mock Interview Timetable",
     headers = interview_header, days = days)
