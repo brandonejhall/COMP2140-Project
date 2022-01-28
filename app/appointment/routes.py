@@ -1,22 +1,22 @@
-from flask import Blueprint,render_template,session,redirect,flash,request,jsonify
+from flask import Blueprint,render_template,session,redirect,flash
 from flask.helpers import url_for
 import string
 import random
 import datetime
 from app import send_mail
 from app import config
-from datetime import datetime,timedelta
 
 
 appointment = Blueprint('appoint',__name__,template_folder='templates',static_folder='static', static_url_path='/static/appoint')
 
 from flask import request
-from app.appointment.forms import BookingForm, MockInterviewSignUp, RescheduleForm, MIsignup, reason
+from app.appointment.forms import BookingForm, RescheduleForm, reason
 from app import db
-from app.models import Appointments,AvailableTimes, LogStorage, MockInterviewSetup,MockInterviewSignUp
+from app.models import Appointments,AvailableTimes, LogStorage
 
 def id_generator(size=12, c=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(c) for _ in range(size))
+<<<<<<< HEAD
 def mockdays():
     mock = MockInterviewSetup.query.first()
     sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
@@ -72,6 +72,8 @@ def checkcomps(dt,tm):
 
 
     
+=======
+>>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 
 def date_check(dt):
     dt_check = dt.split()[0].split('-')
@@ -193,6 +195,7 @@ def index():
     return render_template('homepage.html',title ='Book Appointment',form = form)
     #remember to check if user has appointment already with the same reason flash "Appointment already exists please visit reschedule section"
 
+<<<<<<< HEAD
 @appointment.route('/cancel',methods = ['GET','POST'])
 def cancel():
     if request.method == 'POST':
@@ -223,6 +226,10 @@ def cancel():
                 db.session.commit()
     return render_template("cancel.html", title = "Appointment Cancellation")
 """
+=======
+
+
+>>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
 @appointment.route('/reschedule',methods=['GET','POST'])
 def reschedule():
     form = RescheduleForm()
@@ -246,6 +253,7 @@ def reschedule():
                 db.session.add(log)
                 db.session.commit()
     return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
+<<<<<<< HEAD
 """    
 @appointment.route('/mockinterviewsignup',methods=['GET','POST'])
 def mockinterviewsignup():
@@ -292,3 +300,10 @@ def slotcheck():
             print(type(checkcomps(day,time)))
             #companies = ' '.join([str(elem) for elem in checkcomps(day,time)])
             return jsonify(checkcomps(day,time))
+=======
+    
+
+@appointment.route('/test',methods=['GET','POST'])
+def test():
+    return render_template('mock-interview.html',title ='HomePage')
+>>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d

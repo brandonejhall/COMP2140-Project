@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<body>
+    
+    <div class="body1">
+        <div id="body-head">
+            <h1>Placement and Career Services Booking Platform</h1>
+            
+        </div>
+        <div class="contents">
+            <div class="form-group">
+                <div id="contents">
+                    <h2>Mock Interview Sign-up Form</h2>
+                    <form action="" id="myform" action="" method="post" novalidate>
+                        <div class="form-input">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" placeholder="eg. John Brown">
+                        </div>
+                        <div class="form-input">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="eg. johnbrown@example.com">
+                        </div>
+                        <div class="form-input">
+                            <label for="degree">Degree</label>
+                            <input type="text" name="degree" id="degree" placeholder="eg. Computer Science">
+                        </div>     
+                        <div class="form-input">
+                            <label for="companies">Companies</label>
+                            <select name="companies" id="companies">
+                                <option value="A-Z Business Group">A-Z Business Group</option>
+                                <option value="Barton Commercial Bank">Barton Commercial Bank</option>
+                                <option value="Campbell's Solutions">Campbell's Solutions</option>
+                                <option value="D and E Management">D and E Management</option>
+                                <option value="Edwards and Associates">Edwards and Associates</option>
+                                <option value="Fennell's Enterprise">Fennell's Enterprise</option>
+                                <option value="Gordon Inc">Gordon Inc</option>
+                                <option value="Henry Consultancy">Henry Consultancy</option>
+                                <option value="International Accreditation">International Accreditation</option>
+                                <option value="Johnson and Company">Johnson and Company</option>
+                                <option value="K and W Financial Group">K and W Financial Group</option>
+                                <option value="Lindsay's Communication">Lindsay's Communication</option>
+                                <option value="Mona's Advertising">Mona's Advertising</option>
+                                <option value="Newell's Placement Services">Newell's Placement Services</option>
+                                <option value="O and H Properties">O and H Properties</option>
+                            </select>
+                        </div>
+                        <div class="form-input">
+                            <label for="time-slot">Time slot</label>
+                            <input type="text" name="time-slot" id="time-slot">
+                        </div>  
+                        <div class="form-input">
+                            <label for="date">Date</label>
+                            <input type="text" name="date" id="date">
+                        </div>      
+                        <div class="form-button">
+                            <button id="form-submit">Submit</button>
+
+                        </div>
+                    </form>                 
+                </div>
+                  
+            </div> 
+        </div>
+        
+        
+    </div>
+    
+</body>
+{% endblock %}

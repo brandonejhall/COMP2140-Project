@@ -4,30 +4,32 @@
 <body>
     <div class="body1">
         <div id="body-head">
-            <h1>Placement and Career Services</h1>
+            <h1>Placement and Career Services Admin Menu</h1>
             
         </div>
         <div class="admin-buttons">
             <div class="button-group"> 
-                <div id="view-schedule-btn">
-                    <a href = "{{url_for('administration.generate')}}">
-                    <button id="view-schedule">View Schedule</button>
-                    </a>
-                </div>
+                <a href = "{{url_for('administration.generate')}}">
+                <button id="view-schedule">View Schedule</button>
+                </a>
             </div> 
             <div class="button-group"> 
-                <div id="edit-availability-btn">
-                    <a href = "{{url_for('administration.editTimes')}}" >
-                    <button id="edit-availability">Edit Availability</button>
-                    </a>
-                </div>
+                <a href = "{{url_for('administration.editTimes')}}" >
+                <button id="edit-availability">Edit Availability</button>
+                </a>
             </div> 
             <div class="button-group"> 
+<<<<<<< HEAD
                 <div id="reschedule-appointment-btn">
                     <a href = "{{url_for('appoint.cancel')}}" >
                     <button id="reschedule-appointment">Reschedule Appointment</button>
                     </a>
                 </div>
+=======
+                <a href = "{{url_for('appoint.reschedule')}}" >
+                <button id="reschedule-appointment">Reschedule Appointment</button>
+                </a>
+>>>>>>> 39d67735078fc115c5081bf3026c19db1f37939d
             </div> 
             <div class="button-group"> 
                 <div id="view-log-btn">
