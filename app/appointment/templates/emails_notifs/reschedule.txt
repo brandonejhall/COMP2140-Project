@@ -1,5 +1,3 @@
 Dear {{booking.name}},
 
-APPOINTMENT REASON: {{booking.app_type}}
-DATE OF APPOINTMENT: {{booking.date_time}}
-REFERENCE NUMBER: {{booking.ref_num}}
+Your Mock Interview Scheduled for {{booking.date}} at {{booking.time}} has been cancelled.

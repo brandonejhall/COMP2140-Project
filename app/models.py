@@ -51,6 +51,7 @@ class MockInterviewSetup(db.Model):
     start_time = db.Column(db.String(), index = True)
     end_time = db.Column(db.String(), index = True)
     break_time = db.Column(db.String(), index =True)
+    extra_break = db.Column(db.String(), index = True)
     interval = db.Column(db.Integer, index = True)
     companies = db.Column(db.String(), index = True)
 
@@ -61,6 +62,8 @@ class MockInterviewSignUp(db.Model):
     date = db.Column(db.String(), index = True)
     time = db.Column(db.String(), index = True)
     company = db.Column(db.String(), index = True)
+    reference = db.Column(db.String(), index = True)
+    email = db.Column(db.String(), index = True)
 
 
 

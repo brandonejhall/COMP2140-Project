@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<body>
+    <style>
+        .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+}
+    </style>
+    <div class="body1">
+        <div id="body-head">
+            
+            
+        </div>
+
+        <div class="form-group">
+            <div id="contents">
+                <h2>{{title}}</h2>
+                <form action="" id="myform" action="" method="post" novalidate>
+                    <label for="ref_num">Reference Number:</label>
+                    <input type="text" id="ref_num" name="ref_num"><br><br>
+                    <label for="Email">Email:</label>
+                    <input type="email" id="email" name="email"><br><br>
+                    <input type="radio" name="test" value="Appointment">Regular Appointment
+                    <input type="radio" name="test" value="Mock">Mock Interview
+                    <input type="submit">
+                </form>                 
+            </div>
+              
+        </div>
+        
+    </div>
+    <script>
+
+
+    </script>
+    
+</body>
+{% endblock %}

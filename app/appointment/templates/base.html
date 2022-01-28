@@ -23,21 +23,30 @@
                     <option value="c">Open Campus</option>
                 </select>
             </div>
-            <div id="links">
-                <a href="https://www.mona.uwi.edu/visitors">Visit UWI</a>
-                <a href="https://www.mona.uwi.edu/mail">Email</a>
-                <a href="https://www.mona.uwi.edu/directory">Directory</a>
-                <a href="https://www.google.com/maps/@18.0062045,-76.7452329,17z">Campus Map</a>
-                <a href="https://www.mona.uwi.edu/help">Help</a>
+            <div>
+                <nav>
+                    <ul>
+                        <li><a href="https://www.mona.uwi.edu/visitors">Visit UWI</a></li>
+                        <li><a href="https://www.mona.uwi.edu/mail">Email</a></li>
+                        <li><a href="https://www.mona.uwi.edu/directory">Directory</a></li>
+                        <li><a href="https://www.google.com/maps/@18.0062045,-76.7452329,17z">Campus Map</a></li>
+                        <li><a href="https://www.mona.uwi.edu/help">Help</a></li>
+                    </ul>
+                    
+                </nav>
             </div>
+                  
             <div id="head-search">
                 <input type="text" placeholder="Enter Search Term...">
                 <button id="head-search-btn" ><i class="fa">&#xf002;</i></button>
                 
             </div>
-            <a href = "{{url_for('administration.login')}}">
-            <button id="admin">Admin</button>
-            </a>
+            <div id="ad-button">
+                <a href = "{{url_for('administration.login')}}">
+                <button id="admin">Admin</button>
+                </a>
+            </div>
+            
         </div>
         <div class="full-header">
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Coat_of_arms_of_the_University_of_the_West_Indies.png/220px-Coat_of_arms_of_the_University_of_the_West_Indies.png" alt="Image of UWI logo">

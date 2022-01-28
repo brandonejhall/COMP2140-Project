@@ -28,6 +28,7 @@ class MockInterviewSetupForm(FlaskForm):
     end_time = TimeField('EndTime(HH:MM)',[DataRequired()])
     interval = IntegerField('Interview Intervals(in minutes)',[DataRequired()])
     breaktime = TimeField('BreakTime(HH:MM)',[DataRequired()])
+    extrabreak = TimeField('Extra Break(HH:MM)',[DataRequired()])
     companies = StringField('Companies', [DataRequired()])
     submit = SubmitField('submit')
 

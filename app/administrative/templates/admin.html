@@ -24,7 +24,7 @@
             </div> 
             <div class="button-group"> 
                 <div id="reschedule-appointment-btn">
-                    <a href = "{{url_for('appoint.reschedule')}}" >
+                    <a href = "{{url_for('appoint.cancel')}}" >
                     <button id="reschedule-appointment">Reschedule Appointment</button>
                     </a>
                 </div>
@@ -33,6 +33,22 @@
                 <div id="view-log-btn">
                 <a href = "{{url_for('administration.log')}}" >
                     <button id="view-log">View Log of Events </button>
+                </a>
+                </div>
+            </div> 
+
+            <div class="button-group"> 
+                <div id="view-log-btn">
+                <a href = "{{url_for('administration.mock_setup')}}" >
+                    <button id="sumi">Set Up MockInterviews </button>
+                </a>
+                </div>
+            </div> 
+
+            <div class="button-group"> 
+                <div id="view-log-btn">
+                <a href = "{{url_for('administration.mock_table')}}" >
+                    <button id="vmitt">View Mock Interview Time Table </button>
                 </a>
                 </div>
             </div> 

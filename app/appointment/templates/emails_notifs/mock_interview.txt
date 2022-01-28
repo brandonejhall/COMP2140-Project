@@ -1,0 +1,4 @@
+Dear {{booking.name}}
+
+Your mock interview for {{booking.company}} is scheduled for {{booking.date}} at {{booking.time}}
+REFERENCE NUMBER : {{booking.reference}}
