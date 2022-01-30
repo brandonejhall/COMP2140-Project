@@ -221,32 +221,9 @@ def cancel():
                 db.session.commit()
                 db.session.delete(app)
                 db.session.commit()
+        return redirect(url_for('administrative.cancel'))
     return render_template("cancel.html", title = "Appointment Cancellation")
-"""
-@appointment.route('/reschedule',methods=['GET','POST'])
-def reschedule():
-    form = RescheduleForm()
-    if request.method == 'POST':
-        email = form.email.data
-        ref_num = form.ref_number.data
-        dt = str(form.new_date_time.data)
-        d_check =  date_check(dt)
-        t_check = time_check(dt)
-        db_check = database_check(dt)
-        app = Appointments.query.filter_by(ref_num=ref_num).first()
-        if (app is None):
-            flash ('No appointment exists with the given reference number','error')
-        if app.email == email:
-            if (d_check[0] and d_check[1] and d_check[2] and d_check[3] and t_check[0] and t_check[1] and db_check ):
-                txt = render_template('emails_notifs/reschedule.txt',booking = app)
-                ht = render_template('emails_notifs/reschedule.html',booking = app)
-                log = LogStorage (logged = f"{app.name} rescheduled an appointment for {app.date_time} to {dt}")
-                send_mail.send_email('Career Service Appointment',config.Config.MAIL_USERNAME,[email],txt,ht)
-                app.date_time = dt
-                db.session.add(log)
-                db.session.commit()
-    return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
-"""    
+
 @appointment.route('/mockinterviewsignup',methods=['GET','POST'])
 def mockinterviewsignup():
     days = mockdays()
@@ -259,6 +236,7 @@ def mockinterviewsignup():
         company = request.form['companies']
         email = request.form['email']
         ref_num = id_generator()
+        email_check = MockInterviewSignUp.query.filter_by(email=email).first()
 
         app = MockInterviewSignUp.query.filter_by(reference=ref_num).first()
         while app != None:
@@ -267,6 +245,8 @@ def mockinterviewsignup():
        
         if name == '' or major == '' or date == '' or slot == '' or company == '' or email == '':
             flash ('All data must be filled out on this form','error')
+        elif email_check != None:
+            flash ('A mock interview appointment has already been created for this user','error')
         else:
             misu = MockInterviewSignUp(name = name, major = major,date =date, time =slot, company = company,email = email,reference = ref_num)
             log = LogStorage (logged = f"{name} booked a Mock Interview for {date} at {slot}")
@@ -277,6 +257,7 @@ def mockinterviewsignup():
             db.session.add(log)
             db.session.add(misu)
             db.session.commit()
+        return redirect(url_for('administrative.mockinterviewsetup'))
     return render_template('mockinterview_signup.html', title = 'Mock Interview SignUp', slots = slots, days = days)
 
 @appointment.route('/slotgenerator',methods=['GET','POST']) 

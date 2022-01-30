@@ -77,8 +77,14 @@
                             })
                             
                             let companies = document.getElementById('companies')
+
                             tm.addEventListener('change',function(event){
                                 event.preventDefault();
+                                companies.innerHTML = "";
+                                var ele = document.createElement("option");
+                                            ele.textContent = "<- Select an Option ->";
+                                            ele.value = '';
+                                            companies.appendChild(ele);
                                 let time = tm.value
                                 let val = document.getElementById('days').value;
                                 fetch(`/slotgenerator?day=${val}&time=${time}`)
@@ -116,113 +122,5 @@
                         {% endwith %}
                     </form>                 
                 </div>
-                <div class="form-group">
-                <div id="contents">
-                    <h2>{{title}}</h2>
-                    <form action="{{ url_for('appoint.mockinterviewsignup') }}" name="mockinterviewsignup" method="post" novalidate>
-                        <label for="fname">First name:</label>
-                        <input type="text" id="fname" name="fname"><br><br>
-                        <label for="lname">Last name:</label>
-                        <input type="text" id="lname" name="lname"><br><br>
-                        <label for="major">Major:</label>
-                        <input type="text" id="major" name="major"><br><br>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email"><br><br>
-                        <label for="days">Mock Interview Days:</label>
-                        <select id = "days" name="days">
-                            <option value=""><- Select An Option -></option> 
-                            {%for day in days%}
-                            <option value={{day}}>{{day}}</option>
-                            {%endfor%}
-                        </select><br><br>
-                        
-                        <label for="slots">Time Slots:</label>
-                        <select id = "slots" name = "slots">
-                            <option value=""><- Select An Option -></option>  
-                        </select><br><br>
-        
-                        <label for="companies">Companies:</label>
-                        <select id = "companies" name = "companies">
-                            <option value=""><- Select An Option -></option>  
-                        </select><br><br>
-        
-                        <input type="submit">
-                        <script type="text/javascript">
-                            window.onload= function(){
-                            
-                            let slotsgen = document.getElementById('days');
-                            
-                            
-                            let tm = document.getElementById('slots');
-                            
-                            slotsgen.addEventListener('change',function(event){
-                                event.preventDefault();
-                                let val = document.getElementById('days').value;
-                                let empty =''
-                                console.log(slotsgen.value);
-                                fetch(`/slotgenerator?day=${val}&time=${empty}`)
-                                .then(response => {
-                                    if (response.ok){
-                                        return response.text()
-                                    }else{
-                                        return Promise.reject('something went wrong')
-                                    }
-                                })
-                                .then(function(data){
-                                    const the_slot = data.split(" ");
-                                    for (i = 0; i<the_slot.length; i++ ){
-                                        var opt = the_slot[i];
-                                        var el = document.createElement("option");
-                                            el.textContent = opt;
-                                            el.value = opt;
-                                            tm.appendChild(el);
-        
-                                    }
-        
-                                })
-                                .catch (error => console.log('There was an error: ' + error))
-                                
-                            })
-                            
-                            let companies = document.getElementById('companies')
-                            tm.addEventListener('change',function(event){
-                                event.preventDefault();
-                                let time = tm.value
-                                let val = document.getElementById('days').value;
-                                fetch(`/slotgenerator?day=${val}&time=${time}`)
-                                .then(response => {
-                                    if (response.ok){
-                                        return response.json()
-                                    }else{
-                                        return Promise.reject('something went wrong')
-                                    }
-                                })
-                                .then(function(data){
-                                    
-                                    for (var key in data){
-                                        var opt = data[key];
-                                        var el = document.createElement("option");
-                                            el.textContent = opt;
-                                            el.value = opt;
-                                            companies.appendChild(el);
-        
-                                    }
-        
-                                })
-                                .catch (error => console.log('There was an error: ' + error))
-                                
-                            })
-                        };
-        
-                        </script>
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for msg in messages %}
-                                <p>{{ms
-                
-        
-        
-        </div>
-    </div>
 </body>
 {% endblock %}
