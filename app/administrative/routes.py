@@ -106,16 +106,16 @@ def pass_generator(size=10, c=string.ascii_uppercase + string.digits):
 
 def get_interviews(dt):
     interviews = MockInterviewSignUp.query.filter_by(date=dt).all()
-    morning = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
-    afternoon = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
+    morning = [[inter.name,inter.time[:5],inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
+    afternoon = [[inter.name,inter.time[:5],inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
     morning = sorted(morning,key = lambda x:x[1])
     afternoon = sorted(afternoon,key = lambda x:x[1])
     return (morning,afternoon)
 
 def get_interviews_comp(dt,comp):
     interviews = MockInterviewSignUp.query.filter_by(date = dt,company=comp).all()
-    morning = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
-    afternoon = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
+    morning = [[inter.name,inter.time[:5],inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
+    afternoon = [[inter.name,inter.time[:5],inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
     morning = sorted(morning,key = lambda x:x[1])
     afternoon = sorted(afternoon,key = lambda x:x[1])
     return (morning,afternoon)
@@ -196,7 +196,7 @@ def mock_setup():
                 setup.interval = interval
                 setup.companies = companies
                 print("DONE")
-    return render_template('hell.html', title = 'Mock Interview Setup',form = form)
+    return render_template('setup.html', title = 'Mock Interview Setup',form = form)
 
 @admin.route('/mocktimetable', methods = ['GET','POST'])
 #@login_required

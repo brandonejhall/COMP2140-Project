@@ -1,4 +1,11 @@
 Dear {{booking.name}}
 
 Your mock interview for {{booking.company}} is scheduled for {{booking.date}} at {{booking.time}}
+
 REFERENCE NUMBER : {{booking.reference}}
+
+Your Mock Interview will be held via Zoom, the link will be provided the day before the interview. You  should log on at least twenty (20) minutes prior to your Mock Interview.
+
+You should be dressed in interview attire.
+
+A copy of your resume must also be on hand.

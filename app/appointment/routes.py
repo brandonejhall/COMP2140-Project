@@ -257,8 +257,8 @@ def mockinterviewsignup():
             db.session.add(log)
             db.session.add(misu)
             db.session.commit()
-        return redirect(url_for('administrative.mockinterviewsetup'))
-    return render_template('mockinterview_signup.html', title = 'Mock Interview SignUp', slots = slots, days = days)
+        return redirect(url_for('appoint.mockinterviewsignup'))
+    return render_template('mock_signup.html', title = 'Mock Interview SignUp', slots = slots, days = days)
 
 @appointment.route('/slotgenerator',methods=['GET','POST']) 
 def slotcheck():
