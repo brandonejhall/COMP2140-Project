@@ -1,0 +1,2 @@
+Dear {{booking.name}},
+Your appointment for {{booking.date_time}} has been cancelled.

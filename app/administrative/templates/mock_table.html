@@ -1,0 +1,147 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<head>
+    <style>
+        .row:nth-child(even)
+        {
+            background-color: grey;
+            color: black;
+        }
+        
+        .header{
+            text-align:left;
+            color: black;
+            
+        }
+        
+        .data{
+            padding:8px;
+            color: black;
+        }
+        
+        .tab{
+            color:whitesmoke;
+            color:black;
+            display: flex;
+            justify-content: center;
+            overflow:scroll; 
+            height:400px;
+        }
+        </style>
+</head>
+<body>
+    <div class="body1">
+        <div class="body1">
+            <div id="body-head">
+                <h1>Placement and Career Services Booking Platform</h1>
+                
+            </div>
+        <div class="contents">
+            <div class="form-group">
+                <div id="contents">
+                    <h2>{{title}}</h2>
+        
+                    <label for="days">Select Mock Interview Day:</label>
+                    <select id = "days" name="days">
+                        <option value=""><- Select An Option -></option> 
+                        {%for day in days%}
+                        <option value={{day}}>{{day}}</option>
+                        {%endfor%}
+                    </select><br><br>
+                    <table id = "morning">
+                        
+                        
+                        <tbody>
+                            <tr colspan = 5>MORNING</tr>
+                            <tr class = "row">
+                            {% for header in headers %}
+                                <th class ="head">{{header}}</th>
+                            {% endfor %}
+                            </tr>
+                            <tbody id = "morningdata">
+                            
+                            </tbody>
+                        
+        
+        
+        
+                        </tbody>
+                        
+                        
+                    
+                    </table>
+                    
+                    <table id = "afternoon">
+                        <tbody>
+                        <tr colspan = 5>AFTERNOON</tr>
+                        <tr class = "row">
+                        {% for header in headers %}
+                            <th class ="head">{{header}}</th>
+                        {% endfor %}
+                        </tr>
+                       
+                        <tbody id = "afternoondata">
+                            
+                        </tbody>
+                        </tbody>
+                    
+                    </table>
+                </div>
+                <script type="text/javascript">
+                    window.onload= function(){
+                    
+                    let slotsgen = document.getElementById('days');
+                    
+                    slotsgen.addEventListener('change',function(event){
+                        event.preventDefault();
+                        let val = document.getElementById('days').value;
+                        let empty =''
+                        console.log(slotsgen.value);
+                        fetch(`/timetabledata?day=${val}`)
+                        .then(response => {
+                            if (response.ok){
+                                return response.json()
+                            }else{
+                                return Promise.reject('something went wrong')
+                            }
+                        })
+                        .then(function(data){
+                            var morning= document.getElementById('morningdata');
+                            var afternoon = document.getElementById('afternoondata');
+                            morning.innerHTML = ""
+                            afternoon.innerHTML = ""
+                            for (var key in data[0]){
+                                var newRow = morning.insertRow();
+                                for (var key2 in data[0][key]){
+                                    var newCell = newRow.insertCell();
+                                    var newText = document.createTextNode(data[0][key][key2]);
+                                    newCell.appendChild(newText);
+                                    
+                                }
+                            }
+                            for (var key in data[1]){
+                                var newRow = afternoon.insertRow();
+                                for (var key2 in data[1][key]){
+                                    var newCell = newRow.insertCell();
+                                    var newText = document.createTextNode(data[1][key][key2]);
+                                    newCell.appendChild(newText);
+                                    console.log(data[1][key][key2])
+                                }
+                            }
+                            
+        
+                            })
+                        .catch (error => console.log('There was an error: ' + error))
+                        
+                    })
+                };
+                    
+                </script>
+        </div>
+    </div>
+    
+        
+</body>
+
+{% endblock %}

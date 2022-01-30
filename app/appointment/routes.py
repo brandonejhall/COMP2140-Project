@@ -1,8 +1,9 @@
-from flask import Blueprint,render_template,session,redirect,flash
+from flask import Blueprint,render_template,session,redirect,flash,jsonify
 from flask.helpers import url_for
 import string
 import random
 import datetime
+from datetime import datetime, timedelta
 from app import send_mail
 from app import config
 
@@ -12,10 +13,65 @@ appointment = Blueprint('appoint',__name__,template_folder='templates',static_fo
 from flask import request
 from app.appointment.forms import BookingForm, RescheduleForm, reason
 from app import db
-from app.models import Appointments,AvailableTimes, LogStorage
+from app.models import Appointments,AvailableTimes, LogStorage,MockInterviewSignUp,MockInterviewSetup
 
 def id_generator(size=12, c=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(c) for _ in range(size))
+def mockdays():
+    mock = MockInterviewSetup.query.first()
+    sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
+    edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
+    day_range = (edate - sdate).days
+    lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
+    return lst
+
+def mockslots():
+    mock = MockInterviewSetup.query.first()
+    stime = mock.start_time
+    etime = mock.end_time
+    inter = mock.interval
+    breaks = [mock.break_time,mock.extra_break]
+    tm = datetime.strptime(stime, '%H:%M:%S')
+    etm = datetime.strptime(etime, '%H:%M:%S')
+    num_slots = int(((etm-tm).total_seconds()/60)//inter)
+    print(num_slots)
+    slots = [str((tm + timedelta(minutes = (int(inter)*x))).time()) for x in range(0,num_slots+1)]
+    slots = [x for x in slots if x not in breaks]
+    #slots = list(set(slots).difference(breaks))
+    return slots
+
+def checkavailslots(dt):
+    mock = MockInterviewSetup.query.first()
+    mock_signup = MockInterviewSignUp.query.all()
+    companies = mock.companies.split(",")
+    avail = []
+    slots = mockslots()
+    for slot in slots:
+        check = MockInterviewSignUp.query.filter_by(time = slot,date = dt).all()
+        compa=[comp.company for comp in check]
+        availcomp = list(set(companies).difference(compa))
+        if availcomp != []:
+            avail.append(slot)
+        else:
+            pass
+    
+    return avail
+
+def checkcomps(dt,tm):
+    mock = MockInterviewSetup.query.first()
+    companies = mock.companies.split(",")
+    check = MockInterviewSignUp.query.filter_by(time = tm,date = dt).all()
+    compa=[comp.company for comp in check]
+    availcomp = list(set(companies).difference(compa))
+    finalcomp = dict([(availcomp.index(x),x) for x in availcomp])
+    return finalcomp
+
+
+       
+
+
+
+    
 
 def date_check(dt):
     dt_check = dt.split()[0].split('-')
@@ -100,6 +156,10 @@ def database_check(dt):
     return unbooked
 
 @appointment.route('/', methods = ['GET','POST'])
+def home():
+    return render_template("realHome.html")
+
+@appointment.route('/booking', methods = ['GET','POST'])
 def index():
     form = BookingForm()
     if request.method == 'POST':
@@ -133,8 +193,36 @@ def index():
     return render_template('homepage.html',title ='Book Appointment',form = form)
     #remember to check if user has appointment already with the same reason flash "Appointment already exists please visit reschedule section"
 
-
-
+@appointment.route('/cancel',methods = ['GET','POST'])
+def cancel():
+    if request.method == 'POST':
+        email = request.form['email']
+        ref_num = request.form['ref_num']
+        test = request.form['test']
+        if test == "Mock":
+            app = MockInterviewSignUp.query.filter_by(reference=ref_num).first()
+            if email == app.email and app != None:
+                txt = render_template('emails_notifs/reschedule.txt',booking = app)
+                ht = render_template('emails_notifs/reschedule.html',booking = app)
+                log = LogStorage (logged = f"{app.name} cancelled MockInterview for {app.date} @ {app.time}")
+                send_mail.send_email('Appointment Cancellation',config.Config.MAIL_USERNAME,[email],txt,ht)
+                db.session.add(log)
+                db.session.commit()
+                db.session.delete(app)
+                db.session.commit()
+        else:
+            app = Appointments.query.filter_by(ref_num=ref_num).first()
+            if email == app.email and app != None:
+                txt = render_template('emails_notifs/appres.txt',booking = app)
+                ht = render_template('emails_notifs/appres.html',booking = app)
+                log = LogStorage (logged = f"{app.name} cancelled an appointment for {app.date_time}")
+                send_mail.send_email('Appointment Cancellation',config.Config.MAIL_USERNAME,[email],txt,ht)
+                db.session.add(log)
+                db.session.commit()
+                db.session.delete(app)
+                db.session.commit()
+    return render_template("cancel.html", title = "Appointment Cancellation")
+"""
 @appointment.route('/reschedule',methods=['GET','POST'])
 def reschedule():
     form = RescheduleForm()
@@ -158,8 +246,49 @@ def reschedule():
                 db.session.add(log)
                 db.session.commit()
     return render_template('reschedule.html',title ='Reschedule Appointment',form = form)
-    
+"""    
+@appointment.route('/mockinterviewsignup',methods=['GET','POST'])
+def mockinterviewsignup():
+    days = mockdays()
+    slots = mockslots()
+    if request.method == 'POST':
+        name = request.form['fname']+" "+request.form['lname']
+        major = request.form['major']
+        date = request.form['days']
+        slot = request.form['slots']
+        company = request.form['companies']
+        email = request.form['email']
+        ref_num = id_generator()
 
-@appointment.route('/test',methods=['GET','POST'])
-def test():
-    return render_template('mock-interview.html',title ='HomePage')
+        app = MockInterviewSignUp.query.filter_by(reference=ref_num).first()
+        while app != None:
+            ref_num = id_generator()
+            app = MockInterviewSignUp.query.filter_by(reference=ref_num).first()
+       
+        if name == '' or major == '' or date == '' or slot == '' or company == '' or email == '':
+            flash ('All data must be filled out on this form','error')
+        else:
+            misu = MockInterviewSignUp(name = name, major = major,date =date, time =slot, company = company,email = email,reference = ref_num)
+            log = LogStorage (logged = f"{name} booked a Mock Interview for {date} at {slot}")
+            txt = render_template('emails_notifs/mock_interview.txt',booking = misu)
+            ht = render_template('emails_notifs/mock_interview.html',booking = misu)
+            send_mail.send_email('Career Service Appointment',config.Config.MAIL_USERNAME,[email],txt,ht)
+            flash('Confirmation email sent','info')
+            db.session.add(log)
+            db.session.add(misu)
+            db.session.commit()
+    return render_template('mockinterview_signup.html', title = 'Mock Interview SignUp', slots = slots, days = days)
+
+@appointment.route('/slotgenerator',methods=['GET','POST']) 
+def slotcheck():
+    if request.method == 'GET':
+        day=request.args.get('day')
+        time=request.args.get('time')
+        if time == '':
+            slots = ' '.join([str(elem) for elem in checkavailslots(day)])
+            return slots
+        else:
+            print(checkcomps(day,time))
+            print(type(checkcomps(day,time)))
+            #companies = ' '.join([str(elem) for elem in checkcomps(day,time)])
+            return jsonify(checkcomps(day,time))
