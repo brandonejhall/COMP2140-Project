@@ -67,6 +67,15 @@
                         {%endfor%}
                     </select><br><br>
                     <table id = "morning">
+
+                    <label for="company">Select Specific Company(optional):</label>
+                    <select id = "company" name="company">
+                        <option value=""><- Select An Option -></option> 
+                        {%for company in companies%}
+                        <option value="{{company}}">{{company}}</option>
+                        {%endfor%}
+                    </select><br><br>
+                    <table id = "morning">
                         
                         
                         <tbody>
@@ -106,9 +115,10 @@
                 <script type="text/javascript">
                     window.onload= function(){
                     
-                    let slotsgen = document.getElementById('days');
+                        let slotsgen = document.getElementById('days');
+                        let specificcomp = document.getElementById('company')
                     
-                    slotsgen.addEventListener('change',function(event){
+                        slotsgen.addEventListener('change',function(event){
                         event.preventDefault();
                         let val = document.getElementById('days').value;
                         let empty =''
@@ -150,8 +160,54 @@
                         .catch (error => console.log('There was an error: ' + error))
                         
                             })
-                        };
-                    
+
+                        specificcomp.addEventListener('change',function(event){
+                        event.preventDefault();
+                        let val = document.getElementById('days').value;
+                        let cval = document.getElementById('company').value;
+                        let empty =''
+                        console.log(specificcomp.value);
+                        fetch(`/comptabledata?day=${val}&company=${cval}`)
+                        .then(response => {
+                            if (response.ok){
+                                return response.json()
+                            }else{
+                                return Promise.reject('something went wrong')
+                            }
+                        })
+                        .then(function(data){
+                            var morning= document.getElementById('morningdata');
+                            var afternoon = document.getElementById('afternoondata');
+                            morning.innerHTML = ""
+                            afternoon.innerHTML = ""
+                            for (var key in data[0]){
+                                var newRow = morning.insertRow();
+                                for (var key2 in data[0][key]){
+                                    var newCell = newRow.insertCell();
+                                    var newText = document.createTextNode(data[0][key][key2]);
+                                    newCell.appendChild(newText);
+                                    
+                                }
+                            }
+                            for (var key in data[1]){
+                                var newRow = afternoon.insertRow();
+                                for (var key2 in data[1][key]){
+                                    var newCell = newRow.insertCell();
+                                    var newText = document.createTextNode(data[1][key][key2]);
+                                    newCell.appendChild(newText);
+                                    console.log(data[1][key][key2])
+                                }
+                            }
+                            
+        
+                            })
+                        .catch (error => console.log('There was an error: ' + error))
+                        
+                            })
+
+                             
+                    };
+                   
                 </script>
         </div>
     </div>

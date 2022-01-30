@@ -33,6 +33,12 @@ def mockdays():
     lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
     return lst
 
+def mockcompanies():
+    mock = MockInterviewSetup.query.first()
+    lst = mock.companies.split(",")
+    return lst
+
+
 @admin.route('/edit', methods = ['GET','POST'])
 @login_required
 def editTimes():
@@ -67,7 +73,7 @@ def log():
 
 week = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 headers = ['DateTime','Day','Name','Reason','reference number']
-interview_header = ['Name','Time','Major','Company']
+interview_header = ['Name','Time','Major','Company','Email','Refernce']
 
 @admin.route('/generate', methods = ['GET','POST'])
 @login_required
@@ -100,8 +106,16 @@ def pass_generator(size=10, c=string.ascii_uppercase + string.digits):
 
 def get_interviews(dt):
     interviews = MockInterviewSignUp.query.filter_by(date=dt).all()
-    morning = [[inter.name,inter.time,inter.major,inter.company] for inter in interviews if inter.time<'12:00:00']
-    afternoon = [[inter.name,inter.time,inter.major,inter.company]  for inter in interviews if inter.time>='12:00:00']
+    morning = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
+    afternoon = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
+    morning = sorted(morning,key = lambda x:x[1])
+    afternoon = sorted(afternoon,key = lambda x:x[1])
+    return (morning,afternoon)
+
+def get_interviews_comp(dt,comp):
+    interviews = MockInterviewSignUp.query.filter_by(date = dt,company=comp).all()
+    morning = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference] for inter in interviews if inter.time<'12:00:00']
+    afternoon = [[inter.name,inter.time,inter.major,inter.company,inter.email,inter.reference]  for inter in interviews if inter.time>='12:00:00']
     morning = sorted(morning,key = lambda x:x[1])
     afternoon = sorted(afternoon,key = lambda x:x[1])
     return (morning,afternoon)
@@ -189,9 +203,10 @@ def mock_setup():
 def mock_table():
     MockTable = MockInterviewSignUp.query.all()
     days = mockdays()
+    comp = mockcompanies()
     
     return render_template('table.html', title = "Mock Interview Timetable",
-    headers = interview_header, days = days)
+    headers = interview_header, days = days, companies = comp)
 
 @admin.route('/timetabledata',methods = ['GET','POST'])    
 def time_table():
@@ -199,5 +214,15 @@ def time_table():
         days = mockdays()
         day = request.args.get('day')
         interviews = get_interviews(day)
+        return jsonify(interviews)
+
+@admin.route('/comptabledata',methods = ['GET','POST'])    
+def comp_table():
+    if request.method == 'GET':
+        days = mockdays()
+        day = request.args.get('day')
+        comp = request.args.get('company')
+        print(comp)
+        interviews = get_interviews_comp(day,comp)
         return jsonify(interviews)
         

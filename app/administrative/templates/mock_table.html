@@ -49,6 +49,14 @@
                         <option value={{day}}>{{day}}</option>
                         {%endfor%}
                     </select><br><br>
+                    
+                    <label for="company">Select Specific Company(optional):</label>
+                    <select id = "company" name="company">
+                        <option value=""><- Select An Option -></option> 
+                        {%for company in companies%}
+                        <option value={{company}}>{{company}}</option>
+                        {%endfor%}
+                    </select><br><br>
                     <table id = "morning">
                         
                         
