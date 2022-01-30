@@ -142,7 +142,7 @@ def login():
 
 
 @admin.route('/mockinterview', methods = ['GET','POST'])
-#@login_required
+@login_required
 def mock_setup():
     form = MockInterviewSetupForm()
     if request.method == 'POST':
