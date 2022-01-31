@@ -29,17 +29,18 @@ def mockdays():
 
 def mockslots():
     mock = MockInterviewSetup.query.first()
-    stime = mock.start_time
-    etime = mock.end_time
-    inter = mock.interval
-    breaks = [mock.break_time,mock.extra_break]
-    tm = datetime.strptime(stime, '%H:%M:%S')
-    etm = datetime.strptime(etime, '%H:%M:%S')
-    num_slots = int(((etm-tm).total_seconds()/60)//inter)
-    print(num_slots)
-    slots = [str((tm + timedelta(minutes = (int(inter)*x))).time()) for x in range(0,num_slots+1)]
-    slots = [x for x in slots if x not in breaks]
-    #slots = list(set(slots).difference(breaks))
+    slots=[]
+    if mock!= None:
+        stime = mock.start_time
+        etime = mock.end_time
+        inter = mock.interval
+        breaks = [mock.break_time,mock.extra_break]
+        tm = datetime.strptime(stime, '%H:%M:%S')
+        etm = datetime.strptime(etime, '%H:%M:%S')
+        num_slots = int(((etm-tm).total_seconds()/60)//inter)
+        slots = [str((tm + timedelta(minutes = (int(inter)*x))).time()) for x in range(0,num_slots+1)]
+        slots = [x for x in slots if x not in breaks]
+        #slots = list(set(slots).difference(breaks))
     return slots
 
 def checkavailslots(dt):
