@@ -19,10 +19,12 @@ def id_generator(size=12, c=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(c) for _ in range(size))
 def mockdays():
     mock = MockInterviewSetup.query.first()
-    sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
-    edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
-    day_range = (edate - sdate).days
-    lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
+    lst=[]
+    if (mock!= None):
+        sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
+        edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
+        day_range = (edate - sdate).days
+        lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
     return lst
 
 def mockslots():
