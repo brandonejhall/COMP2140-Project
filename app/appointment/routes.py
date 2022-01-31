@@ -46,27 +46,31 @@ def mockslots():
 def checkavailslots(dt):
     mock = MockInterviewSetup.query.first()
     mock_signup = MockInterviewSignUp.query.all()
-    companies = mock.companies.split(",")
-    avail = []
-    slots = mockslots()
-    for slot in slots:
-        check = MockInterviewSignUp.query.filter_by(time = slot,date = dt).all()
-        compa=[comp.company for comp in check]
-        availcomp = list(set(companies).difference(compa))
-        if availcomp != []:
-            avail.append(slot)
-        else:
-            pass
+    avail=[]
+    if mock!= None:
+        companies = mock.companies.split(",")
+        avail = []
+        slots = mockslots()
+        for slot in slots:
+            check = MockInterviewSignUp.query.filter_by(time = slot,date = dt).all()
+            compa=[comp.company for comp in check]
+            availcomp = list(set(companies).difference(compa))
+            if availcomp != []:
+                avail.append(slot)
+            else:
+                pass
     
     return avail
 
 def checkcomps(dt,tm):
     mock = MockInterviewSetup.query.first()
-    companies = mock.companies.split(",")
-    check = MockInterviewSignUp.query.filter_by(time = tm,date = dt).all()
-    compa=[comp.company for comp in check]
-    availcomp = list(set(companies).difference(compa))
-    finalcomp = dict([(availcomp.index(x),x) for x in availcomp])
+    finalcomp ={}
+    if mock!= None:  
+        companies = mock.companies.split(",")
+        check = MockInterviewSignUp.query.filter_by(time = tm,date = dt).all()
+        compa=[comp.company for comp in check]
+        availcomp = list(set(companies).difference(compa))
+        finalcomp = dict([(availcomp.index(x),x) for x in availcomp])
     return finalcomp
 
 
