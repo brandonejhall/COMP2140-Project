@@ -1,5 +1,7 @@
 import os
+import psycopg2
 basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config(object):
     #SECRET KEY CONFIGURATION
