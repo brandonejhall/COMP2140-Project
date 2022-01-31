@@ -9,6 +9,7 @@ import datetime
 from datetime import date
 from datetime import datetime,timedelta
 from operator import itemgetter 
+import psycopg2
 
 from flask_login.utils import login_required
 from app import send_mail
