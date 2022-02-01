@@ -228,7 +228,7 @@ def cancel():
                 db.session.commit()
                 db.session.delete(app)
                 db.session.commit()
-        return redirect(url_for('administrative.cancel'))
+        return redirect(url_for('administration.cancel'))
     return render_template("cancel.html", title = "Appointment Cancellation")
 
 @appointment.route('/mockinterviewsignup',methods=['GET','POST'])
