@@ -92,6 +92,7 @@ def generate():
         
         apps.append([date_time,week[date_time.weekday()],appointments.name,appointments.app_type,appointments.ref_num])
     sorted_lst = sorted(apps,key = lambda x:x[0])
+
     return render_template('generate.html',sorted_lst = sorted_lst, headers = headers)
     
 @admin.route('/admini')
@@ -153,6 +154,7 @@ def login():
                 return redirect(url_for('administration.login'))
             login_user(check)
             return redirect(url_for('administration.admini'))
+        return redirect(url_for('administration.login'))
     return render_template('login.html', title = 'Sign In', form = form)
 
 
