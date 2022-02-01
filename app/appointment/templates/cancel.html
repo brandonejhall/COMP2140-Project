@@ -28,9 +28,16 @@
                     <input type="text" id="ref_num" name="ref_num"><br><br>
                     <label for="Email">Email:</label>
                     <input type="email" id="email" name="email"><br><br>
-                    <input type="radio" name="test" value="Appointment">Regular Appointment
-                    <input type="radio" name="test" value="Mock">Mock Interview
+                    <input type="radio" name="test" id ="test" value="Appointment">Regular Appointment
+                    <input type="radio" name="test" id ="test" value="Mock" checked="checked">Mock Interview
                     <input type="submit">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <p>{{msg}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </form>                 
             </div>
               

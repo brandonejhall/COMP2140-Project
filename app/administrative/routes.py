@@ -95,7 +95,7 @@ def generate():
         date=appointments.date_time.split()[0].split('-')
         time=appointments.date_time.split()[-1].split(':')
         print(time)
-        date_time = datetime.datetime(int(date[0]),int(date[1]),int(date[-1]),int(time[0]),int(time[1]))
+        date_time = datetime(int(date[0]),int(date[1]),int(date[-1]),int(time[0]),int(time[1]))
         
         apps.append([date_time,week[date_time.weekday()],appointments.name,appointments.app_type,appointments.ref_num])
     sorted_lst = sorted(apps,key = lambda x:x[0])

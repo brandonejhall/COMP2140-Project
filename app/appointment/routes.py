@@ -208,7 +208,8 @@ def cancel():
         test = request.form['test']
         if test == "Mock":
             app = MockInterviewSignUp.query.filter_by(reference=ref_num).first()
-            if email == app.email and app != None:
+            
+            if  app != None:
                 txt = render_template('emails_notifs/reschedule.txt',booking = app)
                 ht = render_template('emails_notifs/reschedule.html',booking = app)
                 log = LogStorage (logged = f"{app.name} cancelled MockInterview for {app.date} @ {app.time}")
@@ -217,9 +218,11 @@ def cancel():
                 db.session.commit()
                 db.session.delete(app)
                 db.session.commit()
+            else:
+                flash('No Mock Interview was found with given credentials','info')
         else:
             app = Appointments.query.filter_by(ref_num=ref_num).first()
-            if email == app.email and app != None:
+            if app != None:
                 txt = render_template('emails_notifs/appres.txt',booking = app)
                 ht = render_template('emails_notifs/appres.html',booking = app)
                 log = LogStorage (logged = f"{app.name} cancelled an appointment for {app.date_time}")
@@ -228,7 +231,9 @@ def cancel():
                 db.session.commit()
                 db.session.delete(app)
                 db.session.commit()
-        return redirect(url_for('administration.cancel'))
+            else:
+                flash('No Mock Interview was found with given credentials','info')
+        return redirect(url_for('appoint.cancel'))
     return render_template("cancel.html", title = "Appointment Cancellation")
 
 @appointment.route('/mockinterviewsignup',methods=['GET','POST'])
