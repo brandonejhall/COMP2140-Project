@@ -139,6 +139,8 @@ def date_check(dt):
         return [spec_ok,range_ok,e_day,w_end]
     else:
         flash('No appointments set up at this time,please contact office to book')
+        return [False,False,False,False]
+        
 
 def time_check(dt):
     time=dt.split()[-1].split(':')
@@ -160,7 +162,7 @@ def time_check(dt):
             t_range = False
         return [time_ok,t_range]
     flash('No appointments set up at this time please contact office to book')
-
+    return [False,False]
 def database_check(dt):
     if (Appointments.query.filter_by(date_time = dt).first() is None):
         unbooked = True
