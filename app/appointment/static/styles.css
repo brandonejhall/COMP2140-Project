@@ -467,3 +467,12 @@ input{
     border-radius: 5px;
     padding: .5%;
 }
+
+@viewport{
+    zoom:1.0;
+    width: extend-to-zoom;
+}
+@-ms-viewport{
+    zoom:1.0;
+    width: extend-to-zoom;
+}
