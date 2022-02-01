@@ -28,15 +28,22 @@ from app.models import AdminUser, Appointments,AvailableTimes, LogStorage,MockIn
 
 def mockdays():
     mock = MockInterviewSetup.query.first()
-    sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
-    edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
-    day_range = (edate - sdate).days
-    lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
+    
+    lst = []
+    
+    if mock != None: 
+        sdate = datetime.strptime(mock.start_date, '%Y-%m-%d')
+        edate = datetime.strptime(mock.end_date, '%Y-%m-%d')
+        day_range = (edate - sdate).days
+        lst = [str((sdate + timedelta(days=x)).date()) for x in range (0,day_range+1)]
     return lst
 
 def mockcompanies():
+    lst = []
+    
     mock = MockInterviewSetup.query.first()
-    lst = mock.companies.split(",")
+    if mock != None:
+        lst = mock.companies.split(",")
     return lst
 
 
