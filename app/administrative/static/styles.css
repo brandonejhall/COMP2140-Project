@@ -115,6 +115,15 @@ fieldset{
     
 }
 
+@viewport{
+    zoom:1.0;
+    width: extend-to-zoom;
+}
+@-ms-viewport{
+    zoom:1.0;
+    width: extend-to-zoom;
+}
+
 
 #contents{
     padding-left: 10px;
